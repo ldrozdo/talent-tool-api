@@ -1,0 +1,2 @@
+class QueryLanguagesController < ApplicationController
+end
