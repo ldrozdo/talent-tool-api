@@ -81,7 +81,7 @@ RSpec.describe 'Categories API', type: :request do
     end
   end
 
-  # Test suite for PUT /queries/:id
+  # Test suite for PUT /categories/:id
   describe 'PUT /categories/:id' do
     let(:valid_attributes) { { name: 'Another query' } }
 
