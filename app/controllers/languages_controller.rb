@@ -7,44 +7,20 @@ class LanguagesController < ApplicationController
   end
 
   def show
-    # @language = Language.find(params[:id])
     json_response(@language)
   end
 
-  # def edit
-  #   @language = Language.find(params[:id])
-  # end
-
   def update
-    # @language = Language.find(params[:id])
-    # if @language.update_attributes(language_params)
-    #   redirect_to(:action => 'show', :id => @language.id)
-    # else
-    #   render 'edit'
-    # end
     @language.update(language_params)
     head :no_content
   end
 
-  # def new
-  #   @language = Language.new
-  # end
-
   def create
-    # @language = Language.new(language_params)
-    # if @language.save
-    #   redirect_to '/languages'
-    # else
-    #   render 'new'
-    # end
     @language = Language.create!(language_params)
     json_response(@language, :created)
   end
 
   def destroy
-    # Language.find(params[:id]).destroy
-    # flash[:success] = "Language deleted"
-    # redirect_to languages_path
     @language.destroy
     head :no_content
   end
