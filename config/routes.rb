@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   # resources :categories
   resources :languages
 
-  resources :translations, only: [:show]
+  resources :translations, only: [:show, :update, :destroy]
 
   resources :categories do
-    resources :translations , only: [:index, :update, :destroy]
+    resources :translations , only: [:index]
   end
 
   resources :categories do

@@ -88,10 +88,10 @@ RSpec.describe 'Translations API' do
   end
 
   # Test suite for PUT /todos/:todo_id/items/:id
-  describe 'PUT /categories/:category_id/translations/:id' do
-    let(:valid_attributes) { { translated_query: 'Vamos a la playa', category_id: 1 } }
+  describe 'PUT /translations/:id' do
+    let(:valid_attributes) { { translated_query: 'Vamos a la playa' } }
 
-    before { put "/categories/#{category_id}/translations/#{id}", params: valid_attributes }
+    before { put "/translations/#{id}", params: valid_attributes }
 
     context 'when item exists' do
       it 'returns status code 204' do
@@ -118,8 +118,8 @@ RSpec.describe 'Translations API' do
   end
 
   # Test suite for DELETE /todos/:id
-  describe 'DELETE /categories/:category_id/translations/:id' do
-    before { delete "/categories/#{category_id}/translations/#{id}" }
+  describe 'DELETE /translations/:id' do
+    before { delete "/translations/#{id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
