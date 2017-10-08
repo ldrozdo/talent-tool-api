@@ -33,7 +33,7 @@ class TranslationsController < ApplicationController
 
   private
   def update_translation_params
-    params.permit(:translated_query, :category_id)
+    params.permit(:translated_query)
   end
 
   def set_category
