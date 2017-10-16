@@ -11,9 +11,10 @@ RSpec.describe 'Query Languages API' do
   let(:query_id) { query.id }
   let(:user_id) { user.id }
   let(:id) { query_languages.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /queries/:query_id/query_languages' do
-    before { get "/queries/#{query_id}/query_languages" }
+    before { get "/queries/#{query_id}/query_languages", params: {}, headers: headers }
 
     context 'when query language exists' do
       it 'returns status code 200' do
@@ -27,7 +28,7 @@ RSpec.describe 'Query Languages API' do
   end
 
   describe 'GET /query_languages/:id' do
-    before { get "/query_languages/#{id}" }
+    before { get "/query_languages/#{id}" , params: {}, headers: headers}
 
     context 'when query language item exists' do
       it 'returns status code 200' do
@@ -54,10 +55,12 @@ RSpec.describe 'Query Languages API' do
 
   # Test suite for PUT /todos/:todo_id/items
   describe 'POST /queries/:query_id/languages/:language_id/query_languages' do
-    let(:valid_attributes) { { query_id: 1, language_id: 1 } }
+    let(:valid_attributes) do
+      { query_id: 1, language_id: 1 }.to_json 
+    end
 
     context 'when request attributes are valid' do
-      before { post "/queries/#{query_id}/languages/#{language_id}/query_languages", params: valid_attributes }
+      before { post "/queries/#{query_id}/languages/#{language_id}/query_languages", params: valid_attributes , headers: headers}
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -67,7 +70,7 @@ RSpec.describe 'Query Languages API' do
 
   # Test suite for DELETE /todos/:id
   describe 'DELETE /query_languages/:id' do
-    before { delete "/query_languages/#{id}" }
+    before { delete "/query_languages/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

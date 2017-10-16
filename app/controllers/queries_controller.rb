@@ -2,7 +2,7 @@ class QueriesController < ApplicationController
   before_action :set_query, only: [:show, :update, :destroy]
 
   def index
-      @queries = Query.all
+      @queries = current_user.queries
       json_response(@queries)
   end
 
@@ -16,7 +16,7 @@ class QueriesController < ApplicationController
   end
 
   def create
-    @query = Query.create!(query_params)
+    @query = current_user.queries.create!(query_params)
     json_response(@query, :created)
   end
 
@@ -28,7 +28,7 @@ class QueriesController < ApplicationController
   private
   def query_params
     # whitelist params
-    params.permit(:name, :text_of_query, :user_id)
+    params.permit(:name, :text_of_query)
   end
 
   def set_query

@@ -11,9 +11,10 @@ RSpec.describe 'Terms API' do
   let(:query_id) { query.id }
   let(:user_id) { user.id }
   let(:id) { terms.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /queries/:query_id/terms' do
-    before { get "/queries/#{query_id}/terms" }
+    before { get "/queries/#{query_id}/terms" , params: {}, headers: headers}
 
     context 'when term exists' do
       it 'returns status code 200' do
@@ -27,7 +28,7 @@ RSpec.describe 'Terms API' do
   end
 
   describe 'GET /terms/:id' do
-    before { get "/terms/#{id}" }
+    before { get "/terms/#{id}", params: {}, headers: headers }
 
     context 'when term item exists' do
       it 'returns status code 200' do
@@ -54,10 +55,12 @@ RSpec.describe 'Terms API' do
 
   # Test suite for PUT /todos/:todo_id/items
   describe 'POST /queries/:query_id/categories/:category_id/terms' do
-    let(:valid_attributes) { { operator: 'AND',query_id: 1, category_id: 1 } }
+    let(:valid_attributes) do
+      { operator: 'AND',query_id: 1, category_id: 1 }.to_json 
+    end
 
     context 'when request attributes are valid' do
-      before { post "/queries/#{query_id}/categories/#{category_id}/terms", params: valid_attributes }
+      before { post "/queries/#{query_id}/categories/#{category_id}/terms", params: valid_attributes , headers: headers}
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -65,7 +68,7 @@ RSpec.describe 'Terms API' do
     end
 
     context 'when an empty operator of term' do
-      before { post "/queries/#{query_id}/categories/#{category_id}/terms", params: {} }
+      before { post "/queries/#{query_id}/categories/#{category_id}/terms", params: {}, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -76,9 +79,9 @@ RSpec.describe 'Terms API' do
 
   # Test suite for PUT /todos/:todo_id/items/:id
   describe 'PUT /terms/:id' do
-    let(:valid_attributes) { { operator: 'NOT' } }
+    let(:valid_attributes) { { operator: 'NOT' }.to_json }
 
-    before { put "/terms/#{id}", params: valid_attributes }
+    before { put "/terms/#{id}", params: valid_attributes , headers: headers}
 
     context 'when item exists' do
       it 'returns status code 204' do
@@ -106,7 +109,7 @@ RSpec.describe 'Terms API' do
 
   # Test suite for DELETE /todos/:id
   describe 'DELETE /terms/:id' do
-    before { delete "/terms/#{id}" }
+    before { delete "/terms/#{id}" , params: {}, headers: headers}
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

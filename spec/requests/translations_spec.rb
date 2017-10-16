@@ -9,9 +9,10 @@ RSpec.describe 'Translations API' do
   let(:category_id) { category.id }
   let(:language_id) { language.id }
   let(:id) { translations.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /categories/:category_id/translations' do
-    before { get "/categories/#{category_id}/translations" }
+    before { get "/categories/#{category_id}/translations" , params: {}, headers: headers}
 
     context 'when translation exists' do
       it 'returns status code 200' do
@@ -22,22 +23,10 @@ RSpec.describe 'Translations API' do
         expect(json.size).to eq(20)
       end
     end
-
-    # context 'when category does not exist' do
-    #   let(:category_id) { 100 }
-    #
-    #   it 'returns status code 404' do
-    #     expect(response).to have_http_status(404)
-    #   end
-    #
-    #   it 'returns a not found message' do
-    #     expect(response.body).to match(/Couldn't find Category/)
-    #   end
-    # end
   end
 
   describe 'GET /translations/:id' do
-    before { get "/translations/#{id}" }
+    before { get "/translations/#{id}" , params: {}, headers: headers}
 
     context 'when translation item exists' do
       it 'returns status code 200' do
@@ -62,12 +51,16 @@ RSpec.describe 'Translations API' do
     end
   end
 
-  # Test suite for PUT /todos/:todo_id/items
   describe 'POST /categories/:category_id/languages/:language_id/translations' do
-    let(:valid_attributes) { { translated_query: 'Vamos a la playa',language_id: 1, category_id: 1 } }
+    let(:valid_attributes) do
+      { translated_query: 'Vamos a la playa',language_id: 1, category_id: 1 }.to_json
+    end
+    let(:invalid_attributes) do
+      { language_id: 1, category_id: 1 }.to_json
+    end
 
     context 'when request attributes are valid' do
-      before { post "/categories/#{category_id}/languages/#{language_id}/translations", params: valid_attributes }
+      before { post "/categories/#{category_id}/languages/#{language_id}/translations", params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -75,7 +68,7 @@ RSpec.describe 'Translations API' do
     end
 
     context 'when an invalid request' do
-      before { post "/categories/#{category_id}/languages/#{language_id}/translations", params: {language_id: 1, category_id: 1} }
+      before { post "/categories/#{category_id}/languages/#{language_id}/translations", params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -87,11 +80,11 @@ RSpec.describe 'Translations API' do
     end
   end
 
-  # Test suite for PUT /todos/:todo_id/items/:id
-  describe 'PUT /translations/:id' do
-    let(:valid_attributes) { { translated_query: 'Vamos a la playa' } }
 
-    before { put "/translations/#{id}", params: valid_attributes }
+  describe 'PUT /translations/:id' do
+    let(:valid_attributes) { { translated_query: 'Vamos a la playa' }.to_json }
+
+    before { put "/translations/#{id}", params: valid_attributes, headers: headers }
 
     context 'when item exists' do
       it 'returns status code 204' do
@@ -117,9 +110,8 @@ RSpec.describe 'Translations API' do
     end
   end
 
-  # Test suite for DELETE /todos/:id
   describe 'DELETE /translations/:id' do
-    before { delete "/translations/#{id}" }
+    before { delete "/translations/#{id}" , params: {}, headers: headers}
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

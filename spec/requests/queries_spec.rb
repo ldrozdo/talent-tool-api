@@ -6,11 +6,12 @@ RSpec.describe 'Queries API', type: :request do
   let!(:queries) { create_list(:query, 10, user_id: user_id) }
   let(:user_id) { user.id }
   let(:query_id) { queries.first.id }
+  let(:headers) { valid_headers }
 
   # Test suite for GET /queries
   describe 'GET /queries' do
     # make HTTP get request before each example
-    before { get '/queries' }
+    before { get '/queries', params: {}, headers: headers}
 
     it 'returns queries' do
       # Note `json` is a custom helper to parse JSON responses
@@ -25,7 +26,7 @@ RSpec.describe 'Queries API', type: :request do
 
   # Test suite for GET /queries/:id
   describe 'GET /queries/:id' do
-    before { get "/queries/#{query_id}" }
+    before { get "/queries/#{query_id}", params: {}, headers: headers }
 
     context 'when the record exists' do
       it 'returns the query' do
@@ -54,10 +55,15 @@ RSpec.describe 'Queries API', type: :request do
   # Test suite for POST /queries
   describe 'POST /queries' do
     # valid payload
-    let(:valid_attributes) { { name: 'Some query', text_of_query: 'Java AND SQL', user_id: 1 } }
+    let(:valid_attributes) do
+      { name: 'Some query', text_of_query: 'Java AND SQL', user_id: 1 }.to_json
+    end
+    let(:invalid_attributes) do
+      { text_of_query: 'Java AND SQL', user_id: 1 }.to_json
+    end
 
     context 'when the request is valid' do
-      before { post '/queries', params: valid_attributes }
+      before { post '/queries', params: valid_attributes , headers: headers}
 
       it 'creates a query' do
         expect(json['name']).to eq('Some query')
@@ -69,7 +75,7 @@ RSpec.describe 'Queries API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/queries', params: { text_of_query: 'Java AND SQL' , user_id: 1} }
+      before { post '/queries', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -84,10 +90,10 @@ RSpec.describe 'Queries API', type: :request do
 
   # Test suite for PUT /queries/:id
   describe 'PUT /queries/:id' do
-    let(:valid_attributes) { { name: 'Another query' } }
+    let(:valid_attributes) { { name: 'Another query' }.to_json }
 
     context 'when the record exists' do
-      before { put "/queries/#{query_id}", params: valid_attributes }
+      before { put "/queries/#{query_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -101,7 +107,7 @@ RSpec.describe 'Queries API', type: :request do
 
   # Test suite for DELETE /queries/:id
   describe 'DELETE /queries/:id' do
-    before { delete "/queries/#{query_id}" }
+    before { delete "/queries/#{query_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
