@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # resources :queries
   # resources :categories
   resources :languages
+  resources :users, only: [:index]
 
   resources :translations, only: [:index, :show, :update, :destroy]
   resources :terms, only: [:show, :update, :destroy]

@@ -8,11 +8,13 @@ import configureStore from './store/configureStore';
 import {loadLanguages} from './actions/languageActions';
 import {loadCategories} from './actions/categoryActions';
 import {loadTranslations} from './actions/translationActions';
+import {loadQueries} from './actions/queryActions';
 
 const store = configureStore();
 store.dispatch(loadLanguages());
 store.dispatch(loadCategories());
 store.dispatch(loadTranslations());
+store.dispatch(loadQueries());
 
 
 ReactDOM.render(

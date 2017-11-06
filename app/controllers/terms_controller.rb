@@ -12,8 +12,8 @@ class TermsController < ApplicationController
   end
 
   def create
-    @query.terms.create!(create_term_params)
-    json_response(@query, :created)
+    @term = @query.terms.create!(create_term_params)
+    json_response(@term, :created)
   end
 
   def update

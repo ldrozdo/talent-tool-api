@@ -1,5 +1,6 @@
 export default {
   languages: [],
   categories: [],
-  allTranslations: []
+  allTranslations: [],
+  queries: []
 }
