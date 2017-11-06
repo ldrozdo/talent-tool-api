@@ -1,10 +1,13 @@
 class TranslationsController < ApplicationController
-  before_action :set_category, only: [:create, :index]
+  # before_action :set_category, only: [:create, :index]
+  before_action :set_category, only: [:create]
   before_action :set_language, only: [:create]
   before_action :set_translation, only: [:show, :update, :destroy]
 
   def index
-    json_response(@category.translations)
+    # json_response(@category.translations)
+    @translations = Translation.all
+    json_response(@translations)
   end
 
   def show
@@ -12,8 +15,8 @@ class TranslationsController < ApplicationController
   end
 
   def create
-    @category.translations.create!(create_translation_params)
-    json_response(@category, :created)
+    @translation = @category.translations.create!(create_translation_params)
+    json_response(@translation, :created)
   end
 
   def update

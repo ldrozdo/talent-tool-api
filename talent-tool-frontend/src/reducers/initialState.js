@@ -1,3 +1,5 @@
 export default {
-  languages: []
+  languages: [],
+  categories: [],
+  allTranslations: []
 }

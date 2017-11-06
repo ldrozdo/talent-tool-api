@@ -3,13 +3,13 @@ Rails.application.routes.draw do
   # resources :categories
   resources :languages
 
-  resources :translations, only: [:show, :update, :destroy]
+  resources :translations, only: [:index, :show, :update, :destroy]
   resources :terms, only: [:show, :update, :destroy]
   resources :query_languages, only: [:show, :destroy]
 
-  resources :categories do
-    resources :translations , only: [:index]
-  end
+  # resources :categories do
+  #   resources :translations , only: [:index]
+  # end
 
   resources :categories do
     resources :languages do
