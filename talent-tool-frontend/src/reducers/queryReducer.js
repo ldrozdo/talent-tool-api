@@ -5,6 +5,10 @@ export default function queryReducer(state = initialState.queries, action) {
   switch(action.type) {
     case types.LOAD_QUERIES_SUCCESS:
       return action.queries
+    case types.LOAD_BASIC_FORM_QUERY_SUCCESS:
+        return state
+    case types.LOAD_LINKEDIN_FORM_QUERY_SUCCESS:
+        return state
     case types.UPDATE_QUERY_SUCCESS:
       return [
         ...state.filter(query => query.id !== action.query.id),

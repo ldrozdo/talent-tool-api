@@ -9,12 +9,15 @@ import {loadLanguages} from './actions/languageActions';
 import {loadCategories} from './actions/categoryActions';
 import {loadTranslations} from './actions/translationActions';
 import {loadQueries} from './actions/queryActions';
+import {loadTerms} from './actions/termActions';
 
 const store = configureStore();
 store.dispatch(loadLanguages());
 store.dispatch(loadCategories());
 store.dispatch(loadTranslations());
 store.dispatch(loadQueries());
+store.dispatch(loadTerms());
+
 
 
 ReactDOM.render(

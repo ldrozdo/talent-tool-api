@@ -1,10 +1,12 @@
 class TermsController < ApplicationController
-  before_action :set_query, only: [:create, :index]
+  before_action :set_query, only: [:create]
   before_action :set_category, only: [:create]
   before_action :set_term, only: [:show, :update, :destroy]
 
   def index
-    json_response(@query.terms)
+    # json_response(@query.terms)
+    @terms = Term.all
+    json_response(@terms)
   end
 
   def show

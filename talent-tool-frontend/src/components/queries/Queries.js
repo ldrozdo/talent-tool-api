@@ -4,6 +4,7 @@ import * as queryActions from '../../actions/queryActions';
 import PropTypes from 'prop-types';
 import { Nav, NavItem, Grid, Row, Col} from 'react-bootstrap';
 import QueryList from './QueryList';
+import QueryPage from './QueryPage';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import { Button} from 'react-bootstrap';
@@ -63,7 +64,7 @@ class Queries extends React.Component {
           <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked}  />
           </Col>
           <Col xs={8} md={8}>
-              <p>soon</p>
+            {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]}/>}
 
           </Col>
 

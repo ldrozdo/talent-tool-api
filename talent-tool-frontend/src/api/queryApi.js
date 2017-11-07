@@ -52,6 +52,22 @@ class QueryApi {
     });
   }
 
+  static getBasicFormOfQuery(query) {
+    return fetch(`http://localhost:4000/basic_form_query/${query.id}`).then(response => {
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+  }
+
+  static getExpandedQueryLinkedIn(query) {
+    return fetch(`http://localhost:4000/expanded_query_linkedin/${query.id}`).then(response => {
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+  }
+
 }
 
 export default QueryApi;

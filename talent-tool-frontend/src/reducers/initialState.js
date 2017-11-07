@@ -2,5 +2,6 @@ export default {
   languages: [],
   categories: [],
   allTranslations: [],
-  queries: []
+  queries: [],
+  terms: []
 }

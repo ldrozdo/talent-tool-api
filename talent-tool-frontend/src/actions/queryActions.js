@@ -1,4 +1,5 @@
 import queryApi from '../api/queryApi';
+import termApi from '../api/termApi';
 import * as types from './actionTypes';
 
 export function loadQueries() {
@@ -58,4 +59,34 @@ export function deleteQuery(query) {
 
 export function deleteQuerySuccess(query) {
   return {type: types.DELETE_QUERY_SUCCESS, query}
+}
+
+export function loadBasicFormOfQuery(query) {
+  return function(dispatch) {
+    return queryApi.getBasicFormOfQuery(query).then(basicForm => {
+      dispatch(loadBasicFormOfQuerySuccess(basicForm));
+      return basicForm;
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}
+
+export function loadBasicFormOfQuerySuccess(basicForm) {
+  return {type: types.LOAD_BASIC_FORM_QUERY_SUCCESS, basicForm};
+}
+
+export function loadExpandedQueryLinkedIn(query) {
+  return function(dispatch) {
+    return queryApi.getExpandedQueryLinkedIn(query).then(expandedQuery => {
+      dispatch(loadExpandedQueryLinkedInSuccess(expandedQuery));
+      return expandedQuery;
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}
+
+export function loadExpandedQueryLinkedInSuccess(expandedQuery) {
+  return {type: types.LOAD_LINKEDIN_FORM_QUERY_SUCCESS, expandedQuery};
 }

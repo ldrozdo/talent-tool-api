@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index]
 
   resources :translations, only: [:index, :show, :update, :destroy]
-  resources :terms, only: [:show, :update, :destroy]
+  resources :terms, only: [:index, :show, :update, :destroy]
   resources :query_languages, only: [:show, :destroy]
 
   # resources :categories do
@@ -18,9 +18,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :queries do
-    resources :terms , only: [:index]
-  end
+  # resources :queries do
+  #   resources :terms , only: [:index]
+  # end
 
   resources :queries do
     resources :categories do
@@ -37,5 +37,8 @@ Rails.application.routes.draw do
       resources :query_languages, only: [:create]
     end
   end
+
+  resources :basic_form_query, only: [:show]
+  resources :expanded_query_linkedin, only: [:show]
 
 end
