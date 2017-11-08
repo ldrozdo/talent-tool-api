@@ -6,4 +6,6 @@ class Category < ApplicationRecord
   has_many :languages, through: :translations
 
   validates :name, presence: true, length: { in: 2..30  }, uniqueness: { case_sensitive: false }
+
+
 end

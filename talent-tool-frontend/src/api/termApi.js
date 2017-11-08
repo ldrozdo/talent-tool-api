@@ -23,6 +23,18 @@ class TermApi {
      });
    }
 
+   static deleteTerm(term) {
+     const request = new Request(`http://localhost:4000/terms/${term.id}`, {
+       method: 'DELETE'
+     });
+
+     return fetch(request).then(response => {
+       return response.json();
+     }).catch(error => {
+       return error;
+     });
+   }
+
 }
 
 export default TermApi;

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Glyphicon} from 'react-bootstrap';
+import * as termActions from '../../actions/termActions';
+import TermItemPage from './TermItemPage';
 
 class TermsList extends React.Component {
 
@@ -25,9 +26,6 @@ class TermsList extends React.Component {
     return category
   };
 
-  // deleteTranslation(event,translation) {
-  //   this.props.actions.deleteTranslation(translation);
-  // }
 
   render() {
     return (
@@ -35,7 +33,7 @@ class TermsList extends React.Component {
         <ul className="list-unstyled">
           {this.props.terms.map(term =>
               <li key={term.id}>
-              <Button><Glyphicon glyph="remove" /> {this.findCategoryForTerm(term).name}</Button>
+              <TermItemPage term = {term} category = {this.findCategoryForTerm(term)}/>
               </li>
             )}
         </ul>
@@ -50,7 +48,7 @@ TermsList.propTypes = {
 
 // function mapDispatchToProps(dispatch) {
 //   return {
-//     actions: bindActionCreators(categoryActions, dispatch)
+//     actions: bindActionCreators(termActions, dispatch)
 //   };
 // }
 

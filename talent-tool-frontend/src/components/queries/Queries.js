@@ -64,7 +64,8 @@ class Queries extends React.Component {
           <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked}  />
           </Col>
           <Col xs={8} md={8}>
-            {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]}/>}
+            {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]}
+            onQueryUpdated={this.onQueryUpdated} />}
 
           </Col>
 

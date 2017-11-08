@@ -29,3 +29,19 @@ export function createTerm(term) {
 export function createTermSuccess(term) {
   return {type: types.CREATE_TERM_SUCCESS, term}
 }
+
+export function deleteTerm(term) {
+  return function(dispatch) {
+    return termApi.deleteTerm(term).then(() => {
+      console.log(`Deleted term ${term.id}`)
+      dispatch(deleteTermSuccess(term));
+      return;
+    }).catch(error => {
+      throw(error);
+    })
+  }
+}
+
+export function deleteTermSuccess(term) {
+  return {type: types.DELETE_TERM_SUCCESS, term}
+}

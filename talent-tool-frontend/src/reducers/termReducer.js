@@ -10,6 +10,14 @@ export default function termReducer(state = initialState.terms, action) {
         ...state.filter(term => term.id !== action.term.id),
         Object.assign({}, action.term)
       ]
+    case types.DELETE_TERM_SUCCESS: {
+        const newState = Object.assign([], state);
+        const indexOfTermToDelete = state.findIndex(term => {
+          return term.id == action.term.id
+        })
+        newState.splice(indexOfTermToDelete, 1);
+        return newState;
+      }
     default:
       return state;
   }

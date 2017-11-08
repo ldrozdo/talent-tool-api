@@ -7,6 +7,8 @@ import {bindActionCreators} from 'redux';
 import { withRouter } from 'react-router-dom';
 import TermsList from './TermsList';
 import AddTermPage from './AddTermPage';
+import SimpleQueryForm from './SimpleQueryForm';
+
 
 class QueryPage extends React.Component {
 
@@ -26,8 +28,8 @@ class QueryPage extends React.Component {
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.getAndTerms = this.getAndTerms.bind(this);
-    // this.updateQueryState = this.updateQueryState.bind(this);
-    // this.saveQuery = this.saveQuery.bind(this);
+    this.updateQueryState = this.updateQueryState.bind(this);
+    this.saveQuery = this.saveQuery.bind(this);
     // this.deleteQuery = this.deleteQuery.bind(this);
   }
 
@@ -92,24 +94,24 @@ class QueryPage extends React.Component {
     return selected.filter(el => el != undefined)
   }
 
-  // updateQueryState(event) {
-  //   const field = event.target.name;
-  //   const query = this.state.query;
-  //   query[field] = event.target.value;
-  //   return this.setState({query: query});
-  // }
-  //
-  // saveQuery(event) {
-  //   event.preventDefault();
-  //   this.setState({saving: true});
-  //   this.onUpdate();
-  //   this.props.actions.updateQuery(this.state.query);
-  // }
-  //
-  // onUpdate(){
-  //   this.props.onQueryUpdated(this.state.query);
-  // }
-  //
+  updateQueryState(event) {
+    const field = event.target.name;
+    const query = this.state.query;
+    query[field] = event.target.value;
+    return this.setState({query: query});
+  }
+
+  saveQuery(event) {
+    event.preventDefault();
+    this.setState({saving: true});
+    this.onUpdate();
+    this.props.actions.updateQuery(this.state.query);
+  }
+
+  onUpdate(){
+    this.props.onQueryUpdated(this.state.query);
+  }
+
   // deleteQuery(event) {
   //   this.props.onQueryDeleted();
   //   this.props.actions.deleteQuery(this.state.query);
@@ -124,13 +126,16 @@ class QueryPage extends React.Component {
       return (
       <div>
       <h1>Edit Query</h1>
-
+        <SimpleQueryForm
+        query={this.state.query}
+        onSave={this.saveQuery}
+        onChange={this.updateQueryState} />
       </div>
       )
     }
     return(
       <div>
-        <h1>{this.state.query.name}</h1>
+        <h1>{this.state.query.name} <Button bsSize="small" onClick={this.toggleEdit}>Edit Query Name</Button></h1>
         <h4><b>All</b> of these categories will be in search result: </h4>
         <AddTermPage categories={this.props.categories} operator="AND" query={this.state.query} />
         <TermsList terms={andTerms} categories={this.props.categories}/>
