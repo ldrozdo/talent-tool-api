@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Nav, NavItem, Grid, Row, Col} from 'react-bootstrap';
 import QueryList from './QueryList';
 import QueryPage from './QueryPage';
+import NewQueryPage from './NewQueryPage';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import { Button} from 'react-bootstrap';
@@ -26,6 +27,7 @@ class Queries extends React.Component {
     this.onQueryUpdated = this.onQueryUpdated.bind(this);
     this.onQueryDeleted = this.onQueryDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
+    this.turnOffCreating = this.turnOffCreating.bind(this);
   }
 
   onQueryClicked(queryIndex) {
@@ -51,6 +53,11 @@ class Queries extends React.Component {
     this.setState({isCreating: true});
   }
 
+  turnOffCreating(){
+    this.state.selectedQuery = null;
+    this.setState({isCreating: false});
+  }
+
   render() {
     const { selectedQuery } = this.state;
 
@@ -59,14 +66,14 @@ class Queries extends React.Component {
         <Row className="show-grid">
           <Col xs={3} md={3}>
           <h2>Your queries &nbsp;
-
+          <Button bsSize="xsmall" onClick={this.toggleCreating}> + Query</Button>
           </h2>
           <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked}  />
           </Col>
           <Col xs={8} md={8}>
             {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]}
             onQueryUpdated={this.onQueryUpdated} />}
-
+            {this.state.isCreating !== false && <NewQueryPage turnOffCreating={this.turnOffCreating}/>}
           </Col>
 
         </Row>

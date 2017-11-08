@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import TextInput from '../common/TextInput';
 
-class SimpleQueryForm extends React.Component {
+class ComplexQueryForm extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,6 +17,12 @@ class SimpleQueryForm extends React.Component {
             value={this.props.query.name}
             onChange={this.props.onChange}/>
 
+            <TextInput
+              name="text_of_query"
+              label="Text of query"
+              value={this.props.query.text_of_query}
+              onChange={this.props.onChange}/>
+
             <input
              type="submit"
              disabled={this.props.saving}
@@ -29,10 +35,10 @@ class SimpleQueryForm extends React.Component {
   }
 }
 
-SimpleQueryForm.propTypes = {
+ComplexQueryForm.propTypes = {
   query: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
-export default SimpleQueryForm;
+export default ComplexQueryForm;
