@@ -37,7 +37,7 @@ class AutocompleteInput extends React.Component {
         renderItem={(item, highlighted) =>
           <div
             name={item.id}
-            style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
+            style={{ backgroundColor: highlighted ? '#eee' : 'white'}}>
             {item.label}
           </div>
         }

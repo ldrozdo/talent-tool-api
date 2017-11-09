@@ -40,6 +40,7 @@ class NewTranslationPage extends React.Component {
 
   render() {
     return (
+      <div>
         <form>
           <TextInput
             name="translated_query"
@@ -51,6 +52,8 @@ class NewTranslationPage extends React.Component {
              onClick={this.saveTranslation}
              value = 'Create Translation'/>
         </form>
+        <hr />
+      </div>
   );
   }
 }

@@ -162,12 +162,15 @@ class QueryPage extends React.Component {
         <h4><b>All</b> of these categories will be in search result: </h4>
         <AddTermPage categories={this.props.categories} operator="AND" query={this.state.query} />
         <TermsList terms={andTerms} categories={this.props.categories}/>
+        <hr />
         <h4><b>None</b> of these categories will be in search result: </h4>
         <AddTermPage categories={this.props.categories} operator="NOT" query={this.state.query} />
         <TermsList terms={notTerms} categories={this.props.categories}/>
+        <hr />
         <h4><b>At least one</b> of these categories will be in search result: </h4>
         <AddTermPage categories={this.props.categories} operator="OR" query={this.state.query} />
         <TermsList terms={orTerms} categories={this.props.categories}/>
+        <hr />
 
         <Button onClick={() => this.setState({ basicViewOpen: !this.state.basicViewOpen })}>
           View the basic form of query

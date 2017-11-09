@@ -21,15 +21,15 @@ class Navigation extends Component {
             <Navbar inverse collapseOnSelect>
               <Navbar.Header>
                 <Navbar.Brand>
-                  Talent Acquisition Tool
+                  <p>Talent Acquisition Tool</p>
                 </Navbar.Brand>
                 <Navbar.Toggle />
               </Navbar.Header>
               <Navbar.Collapse>
                 <Nav pullRight>
-                  <NavItem><NavLink to="queries">Manage your queries</NavLink></NavItem>
-                  <NavItem><NavLink to="categories">Categories</NavLink></NavItem>
-                  <NavItem><NavLink to="languages">Languages</NavLink></NavItem>
+                  <NavItem className="navigation-menu"><NavLink to="queries">Manage your queries</NavLink></NavItem>
+                  <NavItem className="navigation-menu"><NavLink to="categories">Categories</NavLink></NavItem>
+                  <NavItem className="navigation-menu"><NavLink to="languages">Languages</NavLink></NavItem>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>

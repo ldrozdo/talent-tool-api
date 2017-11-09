@@ -48,7 +48,8 @@ class EditTranslationPage extends React.Component {
         onSave={this.updateTranslation}
         onChange={this.updateTranslationState} />
         <Button onClick={this.deleteTranslation}>Delete</Button>
-        </div>
+        <hr />
+      </div>
 
   );
   }
