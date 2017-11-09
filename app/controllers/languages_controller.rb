@@ -11,8 +11,8 @@ class LanguagesController < ApplicationController
   end
 
   def update
-    @language.update(language_params)
-    head :no_content
+    @language.update!(language_params)
+    json_response(@language)
   end
 
   def create

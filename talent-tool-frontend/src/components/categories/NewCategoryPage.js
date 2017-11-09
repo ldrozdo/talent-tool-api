@@ -36,6 +36,9 @@ class NewCategoryPage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.props.actions.createCategory(this.state.category)
+      .then(({ message }) => {
+        this.props.handleCreating(message)
+      });
   }
 
   render() {

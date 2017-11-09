@@ -11,8 +11,8 @@ class QueriesController < ApplicationController
   end
 
   def update
-    @query.update(query_params)
-    head :no_content
+    @query.update!(query_params)
+    json_response(@query)
   end
 
   def create

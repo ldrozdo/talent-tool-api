@@ -8,7 +8,7 @@ import CategoryPage from './CategoryPage';
 import NewCategoryPage from './NewCategoryPage';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import { Button} from 'react-bootstrap';
+import { Button, Alert} from 'react-bootstrap';
 
 class Categories extends React.Component {
 
@@ -20,22 +20,25 @@ class Categories extends React.Component {
       category: this.props.category,
       selectedCategory: null,
       categories: this.props.categories,
-      isCreating: false
+      isCreating: false,
+      errorMessage: null
     };
 
     this.onCategoryClicked = this.onCategoryClicked.bind(this);
     this.onCategoryUpdated = this.onCategoryUpdated.bind(this);
     this.onCategoryDeleted = this.onCategoryDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
+    this.handleCreating = this.handleCreating.bind(this);
   }
 
   onCategoryClicked(catIndex) {
     this.setState({isCreating: false});
     this.setState({ selectedCategory: catIndex });
+    this.setState({ errorMessage: null });
   }
 
   onCategoryUpdated(category){
-    if (category.id) {
+    if (category.id && this.state.errorMessage != null) {
       this.setState({ category: category });
       this.props.categories[this.state.selectedCategory] = category;
       this.setState({ categories: this.props.categories });
@@ -43,8 +46,17 @@ class Categories extends React.Component {
   }
 
   toggleCreating() {
+    this.setState({ errorMessage: null });
     this.state.selectedCategory = null;
     this.setState({isCreating: true});
+  }
+
+  handleCreating(errorMessage){
+    this.state.selectedCategory = null;
+    this.setState({isCreating: false});
+    if (errorMessage) {
+      this.setState({errorMessage: errorMessage});
+    }
   }
 
   onCategoryDeleted(){
@@ -66,9 +78,15 @@ class Categories extends React.Component {
           <CategoryList categories={this.props.categories} onCategoryClicked={this.onCategoryClicked}  />
           </Col>
           <Col xs={8} md={8}>
+          {this.state.errorMessage &&
+            <Alert bsStyle="warning">
+              <p>{this.state.errorMessage}</p>
+            </Alert>
+          }
           {selectedCategory !== null && <CategoryPage category={this.props.categories[selectedCategory]}
-          onCategoryUpdated={this.onCategoryUpdated} onCategoryDeleted={this.onCategoryDeleted}/>}
-          {this.state.isCreating !== false && <NewCategoryPage />}
+          onCategoryUpdated={this.onCategoryUpdated} onCategoryDeleted={this.onCategoryDeleted}
+          handleCreating={this.handleCreating} />}
+          {this.state.isCreating !== false && <NewCategoryPage handleCreating={this.handleCreating}/>}
           </Col>
 
         </Row>

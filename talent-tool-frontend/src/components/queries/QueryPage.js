@@ -109,7 +109,11 @@ class QueryPage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.onUpdate();
-    this.props.actions.updateQuery(this.state.query);
+    // this.props.actions.updateQuery(this.state.query);
+    this.props.actions.updateQuery(this.state.query)
+      .then(({ message }) => {
+        this.props.handleCreating(message)
+      });
   }
 
   onUpdate(){

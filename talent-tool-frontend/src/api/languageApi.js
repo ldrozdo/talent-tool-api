@@ -18,8 +18,10 @@ class LanguageApi {
    });
 
    return fetch(request).then(response => {
+     console.log(response)
       return response.json();
     }).catch(error => {
+      console.log(error)
       return error;
     });
  }

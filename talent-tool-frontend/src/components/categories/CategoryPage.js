@@ -53,7 +53,11 @@ class CategoryPage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.onUpdate();
-    this.props.actions.updateCategory(this.state.category);
+    // this.props.actions.updateCategory(this.state.category);
+    this.props.actions.updateCategory(this.state.category)
+      .then(({ message }) => {
+        this.props.handleCreating(message)
+      });
   }
 
   onUpdate(){

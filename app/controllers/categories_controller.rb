@@ -11,9 +11,8 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @category.update(category_params)
-    head :no_content
-
+    @category.update!(category_params)
+    json_response(@category)
   end
 
   def create

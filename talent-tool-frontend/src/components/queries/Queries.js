@@ -8,7 +8,7 @@ import QueryPage from './QueryPage';
 import NewQueryPage from './NewQueryPage';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import { Button} from 'react-bootstrap';
+import { Button, Alert} from 'react-bootstrap';
 
 class Queries extends React.Component {
 
@@ -21,23 +21,25 @@ class Queries extends React.Component {
       selectedQuery: null,
       queries: this.props.queries,
       categories: this.props.categories,
-      isCreating: false
+      isCreating: false,
+      errorMessage: null
     };
 
     this.onQueryClicked = this.onQueryClicked.bind(this);
     this.onQueryUpdated = this.onQueryUpdated.bind(this);
     this.onQueryDeleted = this.onQueryDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
-    this.turnOffCreating = this.turnOffCreating.bind(this);
+    this.handleCreating = this.handleCreating.bind(this);
   }
 
   onQueryClicked(queryIndex) {
     this.setState({isCreating: false});
     this.setState({ selectedQuery: queryIndex });
+    this.setState({ errorMessage: null });
   }
 
   onQueryUpdated(query){
-    if (query.id){
+    if (query.id && this.state.errorMessage != null){
       this.setState({ query: query });
       this.props.queries[this.state.selectedQuery] = query;
       this.setState({ queries: this.props.queries });
@@ -50,13 +52,17 @@ class Queries extends React.Component {
   }
 
   toggleCreating() {
+    this.setState({ errorMessage: null });
     this.state.selectedQuery = null;
     this.setState({isCreating: true});
   }
 
-  turnOffCreating(){
+  handleCreating(errorMessage){
     this.state.selectedQuery = null;
     this.setState({isCreating: false});
+    if (errorMessage) {
+      this.setState({errorMessage: errorMessage});
+    }
   }
 
   render() {
@@ -72,9 +78,14 @@ class Queries extends React.Component {
           <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked}  />
           </Col>
           <Col xs={8} md={8}>
-            {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]}
+            {this.state.errorMessage &&
+              <Alert bsStyle="warning">
+                <p>{this.state.errorMessage}</p>
+              </Alert>
+            }
+            {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]} handleCreating={this.handleCreating}
             onQueryUpdated={this.onQueryUpdated} onQueryDeleted={this.onQueryDeleted} />}
-            {this.state.isCreating !== false && <NewQueryPage turnOffCreating={this.turnOffCreating} categories={this.props.categories}/>}
+            {this.state.isCreating !== false && <NewQueryPage handleCreating={this.handleCreating} categories={this.props.categories}/>}
           </Col>
 
         </Row>

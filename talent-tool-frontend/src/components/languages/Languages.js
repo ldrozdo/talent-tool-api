@@ -8,7 +8,7 @@ import LanguagePage from './LanguagePage';
 import NewLanguagePage from './NewLanguagePage';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import { Button} from 'react-bootstrap';
+import { Button, Alert} from 'react-bootstrap';
 
 class Languages extends React.Component {
 
@@ -20,22 +20,25 @@ class Languages extends React.Component {
       language: this.props.language,
       selectedLanguage: null,
       languages: this.props.languages,
-      isCreating: false
+      isCreating: false,
+      errorMessage: null
     };
 
     this.onLanguageClicked = this.onLanguageClicked.bind(this);
     this.onLanguageUpdated = this.onLanguageUpdated.bind(this);
     this.onLanguageDeleted = this.onLanguageDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
+    this.handleCreating = this.handleCreating.bind(this);
   }
 
   onLanguageClicked(langIndex) {
     this.setState({isCreating: false});
     this.setState({ selectedLanguage: langIndex });
+    this.setState({ errorMessage: null });
   }
 
   onLanguageUpdated(language){
-    if (language.id){
+    if (language.id && this.state.errorMessage != null){
       this.setState({ language: language });
       this.props.languages[this.state.selectedLanguage] = language;
       this.setState({ languages: this.props.languages });
@@ -48,8 +51,17 @@ class Languages extends React.Component {
   }
 
   toggleCreating() {
+    this.setState({ errorMessage: null });
     this.state.selectedLanguage = null;
     this.setState({isCreating: true});
+  }
+
+  handleCreating(errorMessage){
+    this.state.selectedLanguage = null;
+    this.setState({isCreating: false});
+    if (errorMessage) {
+      this.setState({errorMessage: errorMessage});
+    }
   }
 
   render() {
@@ -65,9 +77,15 @@ class Languages extends React.Component {
           <LanguageList languages={this.props.languages} onLanguageClicked={this.onLanguageClicked}  />
           </Col>
           <Col xs={8} md={8}>
-              {selectedLanguage !== null && <LanguagePage language={this.props.languages[selectedLanguage]}
-              onLanguageUpdated={this.onLanguageUpdated} onLanguageDeleted={this.onLanguageDeleted}/>}
-              {this.state.isCreating !== false && <NewLanguagePage />}
+              {this.state.errorMessage &&
+                <Alert bsStyle="warning">
+                  <p>{this.state.errorMessage}</p>
+                </Alert>
+              }
+              {selectedLanguage !== null && <LanguagePage language={this.props.languages[selectedLanguage] }
+              onLanguageUpdated={this.onLanguageUpdated} onLanguageDeleted={this.onLanguageDeleted}
+              handleCreating={this.handleCreating} />}
+              {this.state.isCreating !== false && <NewLanguagePage handleCreating={this.handleCreating} />}
           </Col>
 
         </Row>

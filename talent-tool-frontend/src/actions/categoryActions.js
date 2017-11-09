@@ -20,6 +20,7 @@ export function updateCategory(category) {
   return function (dispatch) {
     return categoryApi.updateCategory(category).then(responseCategory => {
       dispatch(updateCategorySuccess(responseCategory));
+      return responseCategory;
     }).catch(error => {
       throw(error);
     });

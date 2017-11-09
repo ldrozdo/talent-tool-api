@@ -17,8 +17,7 @@ class NewLanguagePage extends React.Component {
       language: {
         name: ''
       },
-      saving: false
-    };
+      saving: false  };
 
     this.saveLanguage = this.saveLanguage.bind(this);
     this.updateLanguageState = this.updateLanguageState.bind(this);
@@ -35,6 +34,10 @@ class NewLanguagePage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.props.actions.createLanguage(this.state.language)
+      .then(({ message }) => {
+        this.props.handleCreating(message)
+      });
+    // this.props.actions.createLanguage(this.state.language)
   }
 
   render() {

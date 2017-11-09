@@ -19,6 +19,8 @@ export function updateLanguage(language) {
   return function (dispatch) {
     return languageApi.updateLanguage(language).then(responseLanguage => {
       dispatch(updateLanguageSuccess(responseLanguage));
+      console.log(responseLanguage);
+      return responseLanguage;
     }).catch(error => {
       throw(error);
     });
@@ -56,6 +58,6 @@ export function deleteLanguage(language) {
   }
 }
 
-export function deleteLanguageSuccess(language) {  
+export function deleteLanguageSuccess(language) {
   return {type: types.DELETE_LANGUAGE_SUCCESS, language}
 }

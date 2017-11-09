@@ -21,7 +21,6 @@ class LanguageItem extends Component {
     if (language.name) {
       return (
         <NavItem onClick={this.onClick}>
-        {console.log(language.name)}
           <b>{language.name}</b>
         </NavItem>
       );

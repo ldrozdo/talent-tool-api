@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as languageActions from '../../actions/languageActions';
 import PropTypes from 'prop-types';
-import { Button} from 'react-bootstrap';
+import { Button, Alert} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import LanguageForm from './LanguageForm';
 import { withRouter } from 'react-router-dom';
@@ -14,7 +14,7 @@ class LanguagePage extends React.Component {
     this.state = {
       language: this.props.language,
       saving: false,
-      isEditing: false};
+      isEditing: false };
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.updateLanguageState = this.updateLanguageState.bind(this);
@@ -25,6 +25,7 @@ class LanguagePage extends React.Component {
   toggleEdit() {
     this.setState({isEditing: !this.state.isEditing})
   }
+
 
   componentWillReceiveProps(nextProps) {
     if (this.props.language.id != nextProps.language.id) {
@@ -45,7 +46,10 @@ class LanguagePage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.onUpdate();
-    this.props.actions.updateLanguage(this.state.language);
+    this.props.actions.updateLanguage(this.state.language)
+      .then(({ message }) => {
+        this.props.handleCreating(message)
+      });
   }
 
   onUpdate(){
@@ -62,6 +66,11 @@ class LanguagePage extends React.Component {
     if (this.state.isEditing) {
       return (
       <div>
+      {this.state.hasError &&
+        <Alert bsStyle="warning">
+          <p>Your form is not properly filled!</p>
+        </Alert>
+      }
       <h1>Edit language</h1>
           <LanguageForm
           language={this.state.language}

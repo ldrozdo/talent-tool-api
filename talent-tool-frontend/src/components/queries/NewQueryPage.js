@@ -41,8 +41,12 @@ class NewQueryPage extends React.Component {
     this.setState({saving: true});
     const query = this.state.query;
     query['text_of_query'] = null;
-    this.props.actions.createQuery(query);
-    this.props.turnOffCreating();
+    // this.props.actions.createQuery(query);
+    // this.props.turnOffCreating();
+      this.props.actions.createQuery(query)
+      .then(({ message }) => {
+        this.props.handleCreating(message)
+      });
   }
 
   saveComplexQuery(event) {

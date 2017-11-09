@@ -20,6 +20,7 @@ export function updateQuery(query) {
   return function (dispatch) {
     return queryApi.updateQuery(query).then(responseQuery => {
       dispatch(updateQuerySuccess(responseQuery));
+      return responseQuery;
     }).catch(error => {
       throw(error);
     });
