@@ -77,6 +77,7 @@ class NewQueryPage extends React.Component {
             Click Save, choose the new query from the menu, edit it and use it.</p>
             <ComplexQueryForm
               query={this.props.query}
+              categories={this.props.categories}
               onSave={this.saveComplexQuery}
               onChange={this.updateQueryState}
               saving={this.state.saving} />

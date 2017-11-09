@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import TermsList from './TermsList';
 import AddTermPage from './AddTermPage';
 import SimpleQueryForm from './SimpleQueryForm';
+import ComplexQueryForm from './ComplexQueryForm';
 
 
 class QueryPage extends React.Component {
@@ -28,9 +29,11 @@ class QueryPage extends React.Component {
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.getAndTerms = this.getAndTerms.bind(this);
+    this.getOrTerms = this.getOrTerms.bind(this);
+    this.getNotTerms = this.getNotTerms.bind(this);
     this.updateQueryState = this.updateQueryState.bind(this);
     this.saveQuery = this.saveQuery.bind(this);
-    // this.deleteQuery = this.deleteQuery.bind(this);
+    this.deleteQuery = this.deleteQuery.bind(this);
   }
 
   componentDidMount() {
@@ -56,12 +59,13 @@ class QueryPage extends React.Component {
 
     this.setState({saving: false, isEditing: false});
 
-    this.props.actions.loadBasicFormOfQuery(this.props.query)
+    // console.log(this.state.query);
+    this.props.actions.loadBasicFormOfQuery(nextProps.query)
       .then(({ query }) => {
         this.setState({ basic_form_query : query });
       });
 
-    this.props.actions.loadExpandedQueryLinkedIn(this.props.query)
+    this.props.actions.loadExpandedQueryLinkedIn(nextProps.query)
       .then(({ query }) => {
           this.setState({ linkedin_query : query });
         });
@@ -112,10 +116,10 @@ class QueryPage extends React.Component {
     this.props.onQueryUpdated(this.state.query);
   }
 
-  // deleteQuery(event) {
-  //   this.props.onQueryDeleted();
-  //   this.props.actions.deleteQuery(this.state.query);
-  // }
+  deleteQuery(event) {
+    this.props.onQueryDeleted();
+    this.props.actions.deleteQuery(this.state.query);
+  }
 
 
   render() {
@@ -124,18 +128,33 @@ class QueryPage extends React.Component {
     const notTerms = this.getNotTerms();
     if (this.state.isEditing) {
       return (
-      <div>
-      <h1>Edit Query</h1>
-        <SimpleQueryForm
-        query={this.state.query}
-        onSave={this.saveQuery}
-        onChange={this.updateQueryState} />
-      </div>
+        <div>
+        <h1>Edit Query</h1>
+          {this.state.query.text_of_query == null  &&
+            <SimpleQueryForm
+            query={this.state.query}
+            onSave={this.saveQuery}
+            onChange={this.updateQueryState} />
+        }
+
+        {(this.state.query.text_of_query !== null ) &&
+            <ComplexQueryForm
+            query={this.state.query}
+            categories = {this.props.categories}
+            onSave={this.saveQuery}
+            onChange={this.updateQueryState} />
+        }
+        </div>
       )
     }
     return(
       <div>
-        <h1>{this.state.query.name} <Button bsSize="small" onClick={this.toggleEdit}>Edit Query Name</Button></h1>
+      <h1>{this.state.query.name}&nbsp;
+      <Button bsSize="small" onClick={this.toggleEdit}>Edit Query</Button>&nbsp;
+      <Button bsSize="small" onClick={this.deleteQuery}>Delete Query</Button>
+      </h1>
+      {(this.state.query.text_of_query == null || this.state.query.text_of_query == "") &&
+        <div>
         <h4><b>All</b> of these categories will be in search result: </h4>
         <AddTermPage categories={this.props.categories} operator="AND" query={this.state.query} />
         <TermsList terms={andTerms} categories={this.props.categories}/>
@@ -152,6 +171,17 @@ class QueryPage extends React.Component {
         <Panel collapsible expanded={this.state.basicViewOpen}>
           {this.state.basic_form_query}
         </Panel>
+
+        </div>
+      }
+
+      {(this.state.query.text_of_query !== null ) &&
+        <div>
+          <h3>Text of query: </h3>
+          <h4>{this.state.query.text_of_query}</h4>
+        </div>
+      }
+
         <Button onClick={() => this.setState({ expandedViewOpen: !this.state.expandedViewOpen })}>
           View the expanded query for LinkedIn
         </Button>
@@ -182,10 +212,18 @@ function collectQueryTerms(query, terms) {
 function mapStateToProps(state, ownProps) {
   let query = {name: ''};
   let allTerms = state.terms;
+  let termsOfQuery = [];
   if (ownProps.query) {
-    query = ownProps.query;
+    const id = ownProps.query.id;
+    if (state.queries.length > 0) {
+      query = Object.assign({}, state.queries.find(query => query.id == id))
+      termsOfQuery = collectQueryTerms(query,state.terms);
+    }
   }
-  let termsOfQuery = collectQueryTerms(query,state.terms)
+  // if (ownProps.query) {
+  //   query = ownProps.query;
+  // }
+  // let termsOfQuery = collectQueryTerms(query,state.terms)
   return {query: query, terms: termsOfQuery, categories: state.categories};
 }
 

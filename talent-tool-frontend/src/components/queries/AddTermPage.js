@@ -24,6 +24,15 @@ class AddTermPage extends React.Component {
     this.findCategoryByName = this.findCategoryByName.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.query.id != nextProps.query.id) {
+      this.setState({query: nextProps.query});
+      const term = this.state.term;
+      term['query_id'] = nextProps.query.id;
+      this.setState({term: term});
+    }
+  }
+
 
   saveTerm(event) {
     // event.preventDefault();

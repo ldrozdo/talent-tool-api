@@ -10,14 +10,29 @@ class Query < ApplicationRecord
     if text_of_query.blank?
       expanded_query = expand_simple_query
     else
+      allCategories = Category.all
       splitted_query = text_of_query.split("'")
       expanded_query = ""
       splitted_query.each do |part_of_query|
         was_category = false;
-        categories.each do |category|
+        allCategories.each do |category|
           if part_of_query == category.name
             was_category = true;
-            expanded_query += category.category_query
+            # if category has translations, add them to expanded query
+            if category.translations.empty?
+              expanded_query += "(" + category.category_query + ")"
+            else
+              expanded_query += "((" + category.category_query + ")"
+              last = category.translations.size - 1
+              counter = 0
+              category.translations.each do |translation|
+                if (counter == last)
+                  expanded_query += " OR (" + translation.translated_query + "))"
+                else
+                 expanded_query += " OR (" + translation.translated_query + ")"
+               end
+              end
+            end
           end
         end
         if was_category == false

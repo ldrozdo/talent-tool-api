@@ -33,7 +33,7 @@ class TermsList extends React.Component {
         <ul className="list-unstyled">
           {this.props.terms.map(term =>
               <li key={term.id}>
-              <TermItemPage term = {term} category = {this.findCategoryForTerm(term)}/>
+              <TermItemPage term = {term} category={this.findCategoryForTerm(term)}/>
               </li>
             )}
         </ul>

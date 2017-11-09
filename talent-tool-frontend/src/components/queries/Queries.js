@@ -20,6 +20,7 @@ class Queries extends React.Component {
       query: this.props.query,
       selectedQuery: null,
       queries: this.props.queries,
+      categories: this.props.categories,
       isCreating: false
     };
 
@@ -72,8 +73,8 @@ class Queries extends React.Component {
           </Col>
           <Col xs={8} md={8}>
             {selectedQuery !== null && <QueryPage query={this.props.queries[selectedQuery]}
-            onQueryUpdated={this.onQueryUpdated} />}
-            {this.state.isCreating !== false && <NewQueryPage turnOffCreating={this.turnOffCreating}/>}
+            onQueryUpdated={this.onQueryUpdated} onQueryDeleted={this.onQueryDeleted} />}
+            {this.state.isCreating !== false && <NewQueryPage turnOffCreating={this.turnOffCreating} categories={this.props.categories}/>}
           </Col>
 
         </Row>
@@ -89,7 +90,8 @@ Queries.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    queries: state.queries
+    queries: state.queries,
+    categories: state.categories
   };
 }
 
