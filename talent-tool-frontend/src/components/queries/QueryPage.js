@@ -35,6 +35,7 @@ class QueryPage extends React.Component {
     this.updateQueryState = this.updateQueryState.bind(this);
     this.saveQuery = this.saveQuery.bind(this);
     this.deleteQuery = this.deleteQuery.bind(this);
+    this.urlForLinkedIn = this.urlForLinkedIn.bind(this);
   }
 
   componentDidMount() {
@@ -126,6 +127,10 @@ class QueryPage extends React.Component {
     this.props.actions.deleteQuery(this.state.query, this.state.authToken);
   }
 
+  urlForLinkedIn(){
+    return ("https://www.linkedin.com/search/results/index/?keywords=" + this.state.linkedin_query)
+  }
+
 
   render() {
     const andTerms = this.getAndTerms();
@@ -196,7 +201,7 @@ class QueryPage extends React.Component {
         <Panel collapsible expanded={this.state.expandedViewOpen}>
           {this.state.linkedin_query}
         </Panel>
-        <Button>Search in LinkedIn</Button>
+        <Button target="_blank" href={this.urlForLinkedIn()}>Search in LinkedIn</Button>
       </div>
     )
   }
