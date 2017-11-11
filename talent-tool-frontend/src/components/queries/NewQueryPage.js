@@ -19,7 +19,8 @@ class NewQueryPage extends React.Component {
         name: '',
         text_of_query: ''
       },
-      saving: false
+      saving: false,
+      authToken: this.props.authToken
     };
 
     this.saveSimpleQuery = this.saveSimpleQuery.bind(this);
@@ -43,7 +44,7 @@ class NewQueryPage extends React.Component {
     query['text_of_query'] = null;
     // this.props.actions.createQuery(query);
     // this.props.turnOffCreating();
-      this.props.actions.createQuery(query)
+      this.props.actions.createQuery(query, this.state.authToken)
       .then(({ message }) => {
         this.props.handleCreating(message)
       });
@@ -52,7 +53,7 @@ class NewQueryPage extends React.Component {
   saveComplexQuery(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.createQuery(this.state.query);
+    this.props.actions.createQuery(this.state.query, this.state.authToken);
     this.props.turnOffCreating();
   }
 
@@ -98,7 +99,8 @@ NewQueryPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let query = {name: '', text_of_query: ''};
-  return {query: query};
+  let authToken = state.authentication.token;
+  return {query: query, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

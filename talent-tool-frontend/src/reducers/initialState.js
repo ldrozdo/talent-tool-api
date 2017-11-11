@@ -3,5 +3,6 @@ export default {
   categories: [],
   allTranslations: [],
   queries: [],
-  terms: []
+  terms: [],
+  keycloakInfo: null
 }

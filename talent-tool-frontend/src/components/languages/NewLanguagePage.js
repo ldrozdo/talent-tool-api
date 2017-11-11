@@ -17,7 +17,9 @@ class NewLanguagePage extends React.Component {
       language: {
         name: ''
       },
-      saving: false  };
+      saving: false,
+      authToken: this.props.authToken
+    };
 
     this.saveLanguage = this.saveLanguage.bind(this);
     this.updateLanguageState = this.updateLanguageState.bind(this);
@@ -33,7 +35,7 @@ class NewLanguagePage extends React.Component {
   saveLanguage(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.createLanguage(this.state.language)
+    this.props.actions.createLanguage(this.state.language, this.state.authToken)
       .then(({ message }) => {
         this.props.handleCreating(message)
       });
@@ -60,7 +62,8 @@ NewLanguagePage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let language = {name: ''};
-  return {language: language};
+  let authToken = state.authentication.token;
+  return {language: language, authToken: authToken };
 }
 
 function mapDispatchToProps(dispatch) {

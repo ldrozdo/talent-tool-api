@@ -17,7 +17,8 @@ class NewTranslationPage extends React.Component {
         language_id: this.props.language.id,
         translated_query: ''
       },
-      language: this.props.language
+      language: this.props.language,
+      authToken: this.props.authToken
     };
 
     this.updateTranslationState = this.updateTranslationState.bind(this);
@@ -34,7 +35,7 @@ class NewTranslationPage extends React.Component {
   saveTranslation(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.createTranslation(this.state.translation);
+    this.props.actions.createTranslation(this.state.translation, this.state.authToken);
   }
 
 
@@ -63,8 +64,9 @@ NewTranslationPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  let authToken = state.authentication.token;
   let translation = {translated_query: ''};
-  return {translation: translation};
+  return {translation: translation, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

@@ -1,4 +1,5 @@
 class TermsController < ApplicationController
+  skip_before_action :authorize_request, only: [:index]
   before_action :set_query, only: [:create]
   before_action :set_category, only: [:create]
   before_action :set_term, only: [:show, :update, :destroy]

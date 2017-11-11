@@ -21,7 +21,8 @@ class CategoryPage extends React.Component {
       languages: this.props.languages,
       languagesForTranslations: this.props.languagesForTranslations,
       saving: false,
-      isEditing: false};
+      isEditing: false,
+      authToken: this.props.authToken};
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.updateCategoryState = this.updateCategoryState.bind(this);
@@ -54,7 +55,7 @@ class CategoryPage extends React.Component {
     this.setState({saving: true});
     this.onUpdate();
     // this.props.actions.updateCategory(this.state.category);
-    this.props.actions.updateCategory(this.state.category)
+    this.props.actions.updateCategory(this.state.category, this.state.authToken)
       .then(({ message }) => {
         this.props.handleCreating(message)
       });
@@ -66,7 +67,7 @@ class CategoryPage extends React.Component {
 
   deleteCategory(event) {
     this.props.onCategoryDeleted();
-    this.props.actions.deleteCategory(this.state.category);
+    this.props.actions.deleteCategory(this.state.category, this.state.authToken);
   }
 
 
@@ -89,8 +90,8 @@ class CategoryPage extends React.Component {
         <p>{this.state.category.category_query}</p>
         <Button onClick={this.toggleEdit}>Edit</Button>
         <Button onClick={this.deleteCategory}>Delete</Button>
-        <TranslationList translations={this.props.translations} languages={this.props.languages}/>
-        <CreateTranslationsList languages={this.props.languagesForTranslations}  category = {this.state.category} />
+        <TranslationList translations={this.props.translations} languages={this.props.languages} authToken={this.state.authToken}/>
+        <CreateTranslationsList languages={this.props.languagesForTranslations}  category = {this.state.category} authToken={this.state.authToken}/>
       </div>
     )
   }
@@ -133,6 +134,7 @@ function isInTranslations(languageId, translations){
 
 function mapStateToProps(state, ownProps) {
   let category = {name: '', category_query: ''};
+  let authToken = state.authentication.token;
   let translations = [];
   let languages = state.languages;
   let languagesForTranslations = [];
@@ -144,7 +146,8 @@ function mapStateToProps(state, ownProps) {
       languagesForTranslations = collectUnusedLanguages(languages, translations);
     }
   }
-  return {category: category, translations: translations, languages: languages, languagesForTranslations: languagesForTranslations};
+  return {category: category, translations: translations, languages: languages,
+    languagesForTranslations: languagesForTranslations, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

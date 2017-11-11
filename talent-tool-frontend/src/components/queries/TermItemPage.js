@@ -14,7 +14,8 @@ class TermItemPage extends React.Component {
     super(props);
     this.state = {
       term: this.props.term,
-      category: this.props.category
+      category: this.props.category,
+      authToken: this.props.authToken
     };
 
     this.deleteTerm = this.deleteTerm.bind(this);
@@ -23,7 +24,7 @@ class TermItemPage extends React.Component {
 
   deleteTerm(event) {
     event.preventDefault();
-    this.props.actions.deleteTerm(this.state.term);
+    this.props.actions.deleteTerm(this.state.term, this.state.authToken);
   }
 
 
@@ -41,7 +42,8 @@ TermItemPage.propTypes = {
 function mapStateToProps(state, ownProps) {
   let term = ownProps.term;
   let category = ownProps.category;
-  return {term: term, category: category };
+  let authToken = state.authentication.token;
+  return {term: term, category: category, authToken: authToken };
 }
 
 function mapDispatchToProps(dispatch) {

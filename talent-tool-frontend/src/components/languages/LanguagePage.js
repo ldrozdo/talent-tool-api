@@ -14,7 +14,8 @@ class LanguagePage extends React.Component {
     this.state = {
       language: this.props.language,
       saving: false,
-      isEditing: false };
+      isEditing: false,
+      authToken: this.props.authToken};
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.updateLanguageState = this.updateLanguageState.bind(this);
@@ -46,7 +47,7 @@ class LanguagePage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.onUpdate();
-    this.props.actions.updateLanguage(this.state.language)
+    this.props.actions.updateLanguage(this.state.language, this.state.authToken)
       .then(({ message }) => {
         this.props.handleCreating(message)
       });
@@ -58,7 +59,7 @@ class LanguagePage extends React.Component {
 
   deleteLanguage(event) {
     this.props.onLanguageDeleted();
-    this.props.actions.deleteLanguage(this.state.language);
+    this.props.actions.deleteLanguage(this.state.language, this.state.authToken);
   }
 
 
@@ -98,13 +99,14 @@ LanguagePage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let language = {name: ''};
+  let authToken = state.authentication.token;
   if (ownProps.language) {
     const id = ownProps.language.id;
     if (state.languages.length > 0) {
       language = Object.assign({}, state.languages.find(language => language.id == id))
     }
   }
-    return {language: language};
+    return {language: language, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

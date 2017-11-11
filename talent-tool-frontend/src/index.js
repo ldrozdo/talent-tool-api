@@ -10,8 +10,10 @@ import {loadCategories} from './actions/categoryActions';
 import {loadTranslations} from './actions/translationActions';
 import {loadQueries} from './actions/queryActions';
 import {loadTerms} from './actions/termActions';
+import {handleAuthentication} from './actions/authenticationAction';
 
 const store = configureStore();
+store.dispatch(handleAuthentication());
 store.dispatch(loadLanguages());
 store.dispatch(loadCategories());
 store.dispatch(loadTranslations());

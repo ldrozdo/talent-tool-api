@@ -1,4 +1,5 @@
 class TranslationsController < ApplicationController
+  skip_before_action :authorize_request, only: [:index]
   # before_action :set_category, only: [:create, :index]
   before_action :set_category, only: [:create]
   before_action :set_language, only: [:create]

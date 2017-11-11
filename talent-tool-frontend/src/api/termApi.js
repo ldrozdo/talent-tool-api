@@ -8,14 +8,16 @@ class TermApi {
     });
   }
 
-  static createTerm(term) {
+  static createTerm(term, authToken) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + authToken);
      const request = new Request(`http://localhost:4000/queries/${term.query_id}/categories/${term.category_id}/terms`, {
        method: 'POST',
-       headers: new Headers({
-         'Content-Type': 'application/json'
-       }),
+       headers: headers,
        body: JSON.stringify(term)
      });
+
      return fetch(request).then(response => {
        return response.json();
      }).catch(error => {
@@ -23,9 +25,13 @@ class TermApi {
      });
    }
 
-   static deleteTerm(term) {
+   static deleteTerm(term, authToken) {
+     let headers = new Headers();
+     headers.append('Content-Type', 'application/json');
+     headers.append('Authorization', 'Bearer ' + authToken);
      const request = new Request(`http://localhost:4000/terms/${term.id}`, {
-       method: 'DELETE'
+       method: 'DELETE',
+       headers: headers
      });
 
      return fetch(request).then(response => {

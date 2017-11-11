@@ -20,6 +20,7 @@ class QueryPage extends React.Component {
       query: this.props.query,
       terms: this.props.terms,
       categories: this.props.categories,
+      authToken: this.props.authToken,
       basic_form_query: '',
       linkedin_query: '',
       saving: false,
@@ -37,12 +38,12 @@ class QueryPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadBasicFormOfQuery(this.props.query)
+    this.props.actions.loadBasicFormOfQuery(this.props.query, this.state.authToken)
       .then(({ query }) => {
         this.setState({ basic_form_query : query });
       });
 
-    this.props.actions.loadExpandedQueryLinkedIn(this.props.query)
+    this.props.actions.loadExpandedQueryLinkedIn(this.props.query, this.state.authToken)
       .then(({ query }) => {
           this.setState({ linkedin_query : query });
         });
@@ -60,12 +61,12 @@ class QueryPage extends React.Component {
     this.setState({saving: false, isEditing: false});
 
     // console.log(this.state.query);
-    this.props.actions.loadBasicFormOfQuery(nextProps.query)
+    this.props.actions.loadBasicFormOfQuery(nextProps.query, this.state.authToken)
       .then(({ query }) => {
         this.setState({ basic_form_query : query });
       });
 
-    this.props.actions.loadExpandedQueryLinkedIn(nextProps.query)
+    this.props.actions.loadExpandedQueryLinkedIn(nextProps.query, this.state.authToken)
       .then(({ query }) => {
           this.setState({ linkedin_query : query });
         });
@@ -110,7 +111,7 @@ class QueryPage extends React.Component {
     this.setState({saving: true});
     this.onUpdate();
     // this.props.actions.updateQuery(this.state.query);
-    this.props.actions.updateQuery(this.state.query)
+    this.props.actions.updateQuery(this.state.query, this.state.authToken)
       .then(({ message }) => {
         this.props.handleCreating(message)
       });
@@ -122,7 +123,7 @@ class QueryPage extends React.Component {
 
   deleteQuery(event) {
     this.props.onQueryDeleted();
-    this.props.actions.deleteQuery(this.state.query);
+    this.props.actions.deleteQuery(this.state.query, this.state.authToken);
   }
 
 
@@ -163,7 +164,7 @@ class QueryPage extends React.Component {
         <AddTermPage categories={this.props.categories} operator="AND" query={this.state.query} /></h4>
         <TermsList terms={andTerms} categories={this.props.categories}/>
         <hr />
-        <h4><b>None</b> of these categories will be in search result:&nbsp; 
+        <h4><b>None</b> of these categories will be in search result:&nbsp;
         <AddTermPage categories={this.props.categories} operator="NOT" query={this.state.query} /></h4>
         <TermsList terms={notTerms} categories={this.props.categories}/>
         <hr />
@@ -219,6 +220,7 @@ function collectQueryTerms(query, terms) {
 function mapStateToProps(state, ownProps) {
   let query = {name: ''};
   let allTerms = state.terms;
+  let authToken = state.authentication.token;
   let termsOfQuery = [];
   if (ownProps.query) {
     const id = ownProps.query.id;
@@ -231,7 +233,7 @@ function mapStateToProps(state, ownProps) {
   //   query = ownProps.query;
   // }
   // let termsOfQuery = collectQueryTerms(query,state.terms)
-  return {query: query, terms: termsOfQuery, categories: state.categories};
+  return {query: query, terms: termsOfQuery, categories: state.categories, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

@@ -8,12 +8,13 @@ class CategoryApi {
     });
   }
 
-  static updateCategory(category) {
+  static updateCategory(category, authToken) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + authToken);
    const request = new Request(`http://localhost:4000/categories/${category.id}`, {
      method: 'PUT',
-     headers: new Headers({
-       'Content-Type': 'application/json'
-     }),
+     headers: headers,
      body: JSON.stringify(category)
    });
 
@@ -24,12 +25,13 @@ class CategoryApi {
     });
  }
 
- static createCategory(category) {
+ static createCategory(category, authToken) {
+     let headers = new Headers();
+     headers.append('Content-Type', 'application/json');
+     headers.append('Authorization', 'Bearer ' + authToken);
     const request = new Request('http://localhost:4000/categories', {
       method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
+      headers: headers,
       body: JSON.stringify(category)
     });
 
@@ -40,9 +42,13 @@ class CategoryApi {
     });
   }
 
-  static deleteCategory(category) {
+  static deleteCategory(category, authToken) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + authToken);
     const request = new Request(`http://localhost:4000/categories/${category.id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: headers
     });
 
     return fetch(request).then(response => {

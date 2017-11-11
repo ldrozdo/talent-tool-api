@@ -22,7 +22,8 @@ class Queries extends React.Component {
       queries: this.props.queries,
       categories: this.props.categories,
       isCreating: false,
-      errorMessage: null
+      errorMessage: null,
+      authToken: this.props.authToken
     };
 
     this.onQueryClicked = this.onQueryClicked.bind(this);
@@ -31,6 +32,20 @@ class Queries extends React.Component {
     this.toggleCreating = this.toggleCreating.bind(this);
     this.handleCreating = this.handleCreating.bind(this);
   }
+
+  // componentWillMount() {
+  //   this.props.actions.loadQueries(this.state.authToken)
+  //     .then(({ queries }) => {
+  //       this.setState({ queries : queries });
+  //     });
+  // }
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   this.props.actions.loadQueries(this.state.authToken)
+  //     .then(({ queries }) => {
+  //       this.setState({ queries : queries });
+  //     });
+  // }
 
   onQueryClicked(queryIndex) {
     this.setState({isCreating: false});

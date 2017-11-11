@@ -18,7 +18,8 @@ class NewCategoryPage extends React.Component {
         name: '',
         category_query: ''
       },
-      saving: false
+      saving: false,
+      authToken: this.props.authToken
     };
 
     this.saveCategory = this.saveCategory.bind(this);
@@ -35,7 +36,7 @@ class NewCategoryPage extends React.Component {
   saveCategory(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.createCategory(this.state.category)
+    this.props.actions.createCategory(this.state.category, this.state.authToken)
       .then(({ message }) => {
         this.props.handleCreating(message)
       });
@@ -61,7 +62,8 @@ NewCategoryPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let category = {name: '', category_query: ''};
-  return {category: category};
+  let authToken = state.authentication.token;
+  return {category: category, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

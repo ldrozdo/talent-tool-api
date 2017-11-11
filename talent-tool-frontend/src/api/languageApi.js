@@ -8,17 +8,16 @@ class LanguageApi {
     });
   }
 
-  static updateLanguage(language) {
-   const request = new Request(`http://localhost:4000/languages/${language.id}`, {
+  static updateLanguage(language, authToken) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + authToken);
+    const request = new Request(`http://localhost:4000/languages/${language.id}`, {
      method: 'PUT',
-     headers: new Headers({
-       'Content-Type': 'application/json'
-     }),
+    headers: headers,
      body: JSON.stringify(language)
    });
-
    return fetch(request).then(response => {
-     console.log(response)
       return response.json();
     }).catch(error => {
       console.log(error)
@@ -26,12 +25,13 @@ class LanguageApi {
     });
  }
 
- static createLanguage(language) {
+ static createLanguage(language, authToken) {
+     let headers = new Headers();
+     headers.append('Content-Type', 'application/json');
+     headers.append('Authorization', 'Bearer ' + authToken);
     const request = new Request('http://localhost:4000/languages', {
       method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
+      headers: headers,
       body: JSON.stringify(language)
     });
 
@@ -42,9 +42,13 @@ class LanguageApi {
     });
   }
 
-  static deleteLanguage(language) {
+  static deleteLanguage(language, authToken) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + authToken);
     const request = new Request(`http://localhost:4000/languages/${language.id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: headers
     });
 
     return fetch(request).then(response => {

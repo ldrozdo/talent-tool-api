@@ -15,9 +15,9 @@ export function loadTermsSuccess(terms) {
   return {type: types.LOAD_TERMS_SUCCESS, terms};
 }
 
-export function createTerm(term) {
+export function createTerm(term, authToken) {
   return function (dispatch) {
-    return termApi.createTerm(term).then(responseTerm => {
+    return termApi.createTerm(term, authToken).then(responseTerm => {
       dispatch(createTermSuccess(responseTerm));
       return responseTerm;
     }).catch(error => {
@@ -30,9 +30,9 @@ export function createTermSuccess(term) {
   return {type: types.CREATE_TERM_SUCCESS, term}
 }
 
-export function deleteTerm(term) {
+export function deleteTerm(term, authToken) {
   return function(dispatch) {
-    return termApi.deleteTerm(term).then(() => {
+    return termApi.deleteTerm(term, authToken).then(() => {
       console.log(`Deleted term ${term.id}`)
       dispatch(deleteTermSuccess(term));
       return;

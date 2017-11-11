@@ -15,11 +15,10 @@ export function loadLanguagesSuccess(languages) {
   return {type: types.LOAD_LANGUAGES_SUCCESS, languages};
 }
 
-export function updateLanguage(language) {
+export function updateLanguage(language, authToken) {
   return function (dispatch) {
-    return languageApi.updateLanguage(language).then(responseLanguage => {
+    return languageApi.updateLanguage(language, authToken).then(responseLanguage => {
       dispatch(updateLanguageSuccess(responseLanguage));
-      console.log(responseLanguage);
       return responseLanguage;
     }).catch(error => {
       throw(error);
@@ -31,9 +30,9 @@ export function updateLanguageSuccess(language) {
   return {type: types.UPDATE_LANGUAGE_SUCCESS, language}
 }
 
-export function createLanguage(language) {
+export function createLanguage(language, authToken) {
   return function (dispatch) {
-    return languageApi.createLanguage(language).then(responseLanguage => {
+    return languageApi.createLanguage(language, authToken).then(responseLanguage => {
       dispatch(createLanguageSuccess(responseLanguage));
       return responseLanguage;
     }).catch(error => {
@@ -46,9 +45,9 @@ export function createLanguageSuccess(language) {
   return {type: types.CREATE_LANGUAGE_SUCCESS, language}
 }
 
-export function deleteLanguage(language) {
+export function deleteLanguage(language, authToken) {
   return function(dispatch) {
-    return languageApi.deleteLanguage(language).then(() => {
+    return languageApi.deleteLanguage(language, authToken).then(() => {
       console.log(`Deleted ${language.id}`)
       dispatch(deleteLanguageSuccess(language));
       return;

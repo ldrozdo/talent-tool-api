@@ -14,7 +14,8 @@ class EditTranslationPage extends React.Component {
 
     super(props);
     this.state = {
-      translation: this.props.translation
+      translation: this.props.translation,
+      authToken: this.props.authToken
     };
 
     this.updateTranslationState = this.updateTranslationState.bind(this);
@@ -31,12 +32,12 @@ class EditTranslationPage extends React.Component {
 
   updateTranslation(event) {
     event.preventDefault();
-    this.props.actions.updateTranslation(this.state.translation);
+    this.props.actions.updateTranslation(this.state.translation, this.state.authToken);
   }
 
   deleteTranslation(event) {
     event.preventDefault();
-    this.props.actions.deleteTranslation(this.state.translation);
+    this.props.actions.deleteTranslation(this.state.translation, this.state.authToken);
   }
 
 
@@ -63,7 +64,8 @@ EditTranslationPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let translation = ownProps.translation;
-  return {translation: translation};
+  let authToken = state.authentication.token;
+  return {translation: translation, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

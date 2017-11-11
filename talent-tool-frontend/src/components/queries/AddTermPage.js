@@ -17,7 +17,8 @@ class AddTermPage extends React.Component {
         query_id: this.props.query.id,
         operator: this.props.operator
       },
-      query: this.props.query
+      query: this.props.query,
+      authToken: this.props.authToken
     };
 
     this.saveTerm = this.saveTerm.bind(this);
@@ -40,7 +41,7 @@ class AddTermPage extends React.Component {
     const category = this.findCategoryByName(event)
     term['category_id'] = category.id;
     console.log(this.state.term);
-    this.props.actions.createTerm(this.state.term);
+    this.props.actions.createTerm(this.state.term, this.state.authToken);
   }
 
   findCategoryByName(name){
@@ -69,7 +70,8 @@ AddTermPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let term = {operator: '', category_id: '', query_id: ''};
-  return {term: term};
+  let authToken = state.authentication.token;
+  return {term: term, authToken: authToken};
 }
 
 function mapDispatchToProps(dispatch) {

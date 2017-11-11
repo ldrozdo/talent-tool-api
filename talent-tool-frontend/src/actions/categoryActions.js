@@ -16,9 +16,9 @@ export function loadCategoriesSuccess(categories) {
   return {type: types.LOAD_CATEGORIES_SUCCESS, categories};
 }
 
-export function updateCategory(category) {
+export function updateCategory(category, authToken) {
   return function (dispatch) {
-    return categoryApi.updateCategory(category).then(responseCategory => {
+    return categoryApi.updateCategory(category, authToken).then(responseCategory => {
       dispatch(updateCategorySuccess(responseCategory));
       return responseCategory;
     }).catch(error => {
@@ -31,9 +31,9 @@ export function updateCategorySuccess(category) {
   return {type: types.UPDATE_CATEGORY_SUCCESS, category}
 }
 
-export function createCategory(category) {
+export function createCategory(category, authToken) {
   return function (dispatch) {
-    return categoryApi.createCategory(category).then(responseCategory => {
+    return categoryApi.createCategory(category, authToken).then(responseCategory => {
       dispatch(createCategorySuccess(responseCategory));
       return responseCategory;
     }).catch(error => {
@@ -46,9 +46,9 @@ export function createCategorySuccess(category) {
   return {type: types.CREATE_CATEGORY_SUCCESS, category}
 }
 
-export function deleteCategory(category) {
+export function deleteCategory(category, authToken) {
   return function(dispatch) {
-    return categoryApi.deleteCategory(category).then(() => {
+    return categoryApi.deleteCategory(category, authToken).then(() => {
       console.log(`Deleted ${category.id}`)
       dispatch(deleteCategorySuccess(category));
       return;
@@ -62,9 +62,9 @@ export function deleteCategorySuccess(category) {
   return {type: types.DELETE_CATEGORY_SUCCESS, category}
 }
 
-export function createTranslation(translation) {
+export function createTranslation(translation, authToken) {
   return function (dispatch) {
-    return translationApi.createTranslation(translation).then(responseTranslation => {
+    return translationApi.createTranslation(translation, authToken).then(responseTranslation => {
       console.log(`Created new transation`);
       dispatch(createTranslationSuccess(responseTranslation));
       return responseTranslation;
@@ -78,9 +78,9 @@ export function createTranslationSuccess(translation) {
   return {type: types.CREATE_TRANSLATION_SUCCESS, translation}
 }
 
-export function updateTranslation(translation) {
+export function updateTranslation(translation, authToken) {
   return function (dispatch) {
-    return translationApi.updateTranslation(translation).then(responseTranslation => {
+    return translationApi.updateTranslation(translation, authToken).then(responseTranslation => {
       console.log(`updated transation`);
       dispatch(updateTranslationSuccess(responseTranslation));
     }).catch(error => {
@@ -93,9 +93,9 @@ export function updateTranslationSuccess(translation) {
   return {type: types.UPDATE_TRANSLATION_SUCCESS, translation}
 }
 
-export function deleteTranslation(translation) {
+export function deleteTranslation(translation, authToken) {
   return function(dispatch) {
-    return translationApi.deleteTranslation(translation).then(() => {
+    return translationApi.deleteTranslation(translation, authToken).then(() => {
       console.log(`Deleted ${translation.id}`)
       dispatch(deleteTranslationSuccess(translation));
       return;
