@@ -39,7 +39,9 @@ class TranslationList extends React.Component {
           {this.props.translations.map(translation =>
               <li key={translation.id}><b>{this.findLanguageForTranslation(translation).name}: </b>
               {translation.translated_query}
-              <EditTranslationPage translation = {translation}/>
+              {this.props.isAdmin &&
+                <EditTranslationPage translation = {translation}/>
+              }
               </li>
             )}
         </ul>

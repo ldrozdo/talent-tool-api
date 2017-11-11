@@ -21,7 +21,8 @@ class Categories extends React.Component {
       selectedCategory: null,
       categories: this.props.categories,
       isCreating: false,
-      errorMessage: null
+      errorMessage: null,
+      isAdmin: this.props.isAdmin
     };
 
     this.onCategoryClicked = this.onCategoryClicked.bind(this);
@@ -73,7 +74,9 @@ class Categories extends React.Component {
         <Row className="show-grid">
           <Col xs={3} md={3}>
           <h2>Categories &nbsp;
-          <Button bsSize="xsmall" onClick={this.toggleCreating}> + Category</Button>
+          { this.state.isAdmin &&
+            <Button bsSize="xsmall" onClick={this.toggleCreating}> + Category</Button>
+          }
           </h2>
           <CategoryList categories={this.props.categories} onCategoryClicked={this.onCategoryClicked}  />
           </Col>
@@ -86,7 +89,7 @@ class Categories extends React.Component {
           {selectedCategory !== null && <CategoryPage category={this.props.categories[selectedCategory]}
           onCategoryUpdated={this.onCategoryUpdated} onCategoryDeleted={this.onCategoryDeleted}
           handleCreating={this.handleCreating} />}
-          {this.state.isCreating !== false && <NewCategoryPage handleCreating={this.handleCreating}/>}
+          {this.state.isCreating !== false && this.state.isAdmin && <NewCategoryPage handleCreating={this.handleCreating}/>}
           </Col>
 
         </Row>
@@ -101,8 +104,10 @@ Categories.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  let rolesOfUser = localStorage.getItem('roles');
+  let isAdmin = (rolesOfUser.indexOf("app_admin") > -1);
   return {
-    categories: state.categories
+    categories: state.categories, isAdmin: isAdmin
   };
 }
 

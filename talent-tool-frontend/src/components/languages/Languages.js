@@ -21,7 +21,8 @@ class Languages extends React.Component {
       selectedLanguage: null,
       languages: this.props.languages,
       isCreating: false,
-      errorMessage: null
+      errorMessage: null,
+      isAdmin: this.props.isAdmin
     };
 
     this.onLanguageClicked = this.onLanguageClicked.bind(this);
@@ -72,7 +73,9 @@ class Languages extends React.Component {
         <Row className="show-grid">
           <Col xs={3} md={3}>
           <h2>Languages &nbsp;
-          <Button bsSize="xsmall" onClick={this.toggleCreating}> + Language</Button>
+          { this.state.isAdmin &&
+            <Button bsSize="xsmall" onClick={this.toggleCreating}> + Language</Button>
+          }
           </h2>
           <LanguageList languages={this.props.languages} onLanguageClicked={this.onLanguageClicked}  />
           </Col>
@@ -85,7 +88,7 @@ class Languages extends React.Component {
               {selectedLanguage !== null && <LanguagePage language={this.props.languages[selectedLanguage] }
               onLanguageUpdated={this.onLanguageUpdated} onLanguageDeleted={this.onLanguageDeleted}
               handleCreating={this.handleCreating} />}
-              {this.state.isCreating !== false && <NewLanguagePage handleCreating={this.handleCreating} />}
+              {this.state.isCreating !== false && this.state.isAdmin && <NewLanguagePage handleCreating={this.handleCreating} />}
           </Col>
 
         </Row>
@@ -100,8 +103,10 @@ Languages.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  let rolesOfUser = localStorage.getItem('roles');
+  let isAdmin = (rolesOfUser.indexOf("app_admin") > -1);
   return {
-    languages: state.languages
+    languages: state.languages, isAdmin: isAdmin
   };
 }
 

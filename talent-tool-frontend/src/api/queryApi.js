@@ -4,6 +4,7 @@ class QueryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    console.log(localStorage.getItem('token'));
     const request = new Request('http://localhost:4000/queries', {
       method: 'GET',
       headers: headers

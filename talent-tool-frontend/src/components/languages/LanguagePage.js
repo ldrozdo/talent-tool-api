@@ -15,7 +15,8 @@ class LanguagePage extends React.Component {
       language: this.props.language,
       saving: false,
       isEditing: false,
-      authToken: this.props.authToken};
+      authToken: this.props.authToken,
+      isAdmin: this.props.isAdmin};
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.updateLanguageState = this.updateLanguageState.bind(this);
@@ -84,8 +85,12 @@ class LanguagePage extends React.Component {
     return(
       <div>
         <h1>{this.state.language.name}</h1>
-        <Button onClick={this.toggleEdit}>Edit</Button>
-        <Button onClick={this.deleteLanguage}>Delete</Button>
+        {this.state.isAdmin &&
+          <div>
+            <Button onClick={this.toggleEdit}>Edit</Button>
+            <Button onClick={this.deleteLanguage}>Delete</Button>
+          </div>
+        }
       </div>
     )
   }
@@ -100,13 +105,15 @@ LanguagePage.propTypes = {
 function mapStateToProps(state, ownProps) {
   let language = {name: ''};
   let authToken = state.authentication.token;
+  let rolesOfUser = state.authentication.tokenParsed.realm_access.roles;
+  let isAdmin = (rolesOfUser.indexOf("app_admin") > -1);
   if (ownProps.language) {
     const id = ownProps.language.id;
     if (state.languages.length > 0) {
       language = Object.assign({}, state.languages.find(language => language.id == id))
     }
   }
-    return {language: language, authToken: authToken};
+    return {language: language, authToken: authToken, isAdmin: isAdmin};
 }
 
 function mapDispatchToProps(dispatch) {

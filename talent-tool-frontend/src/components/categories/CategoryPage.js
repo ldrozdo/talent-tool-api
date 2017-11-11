@@ -22,7 +22,9 @@ class CategoryPage extends React.Component {
       languagesForTranslations: this.props.languagesForTranslations,
       saving: false,
       isEditing: false,
-      authToken: this.props.authToken};
+      authToken: this.props.authToken,
+      isAdmin: this.props.isAdmin
+    };
 
     this.toggleEdit = this.toggleEdit.bind(this);
     this.updateCategoryState = this.updateCategoryState.bind(this);
@@ -88,10 +90,15 @@ class CategoryPage extends React.Component {
       <div>
         <h1>{this.state.category.name}</h1>
         <p>{this.state.category.category_query}</p>
-        <Button onClick={this.toggleEdit}>Edit</Button>
-        <Button onClick={this.deleteCategory}>Delete</Button>
-        <TranslationList translations={this.props.translations} languages={this.props.languages} authToken={this.state.authToken}/>
-        <CreateTranslationsList languages={this.props.languagesForTranslations}  category = {this.state.category} authToken={this.state.authToken}/>
+        {this.state.isAdmin &&
+          <div>
+            <Button onClick={this.toggleEdit}>Edit</Button>
+            <Button onClick={this.deleteCategory}>Delete</Button>
+          </div> }
+        <TranslationList translations={this.props.translations} languages={this.props.languages} authToken={this.state.authToken} isAdmin={this.state.isAdmin}/>
+        {this.state.isAdmin &&
+          <CreateTranslationsList languages={this.props.languagesForTranslations}  category = {this.state.category}
+          authToken={this.state.authToken}/>}
       </div>
     )
   }
@@ -138,6 +145,8 @@ function mapStateToProps(state, ownProps) {
   let translations = [];
   let languages = state.languages;
   let languagesForTranslations = [];
+  let rolesOfUser = state.authentication.tokenParsed.realm_access.roles;
+  let isAdmin = (rolesOfUser.indexOf("app_admin") > -1);
   if (ownProps.category) {
     const id = ownProps.category.id;
     if (state.categories.length > 0) {
@@ -147,7 +156,7 @@ function mapStateToProps(state, ownProps) {
     }
   }
   return {category: category, translations: translations, languages: languages,
-    languagesForTranslations: languagesForTranslations, authToken: authToken};
+    languagesForTranslations: languagesForTranslations, authToken: authToken, isAdmin: isAdmin};
 }
 
 function mapDispatchToProps(dispatch) {
