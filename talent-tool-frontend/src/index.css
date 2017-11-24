@@ -19,6 +19,13 @@ body {
   font-size: 120%;
 }
 
+.menu-user {
+  font-family: 'Sanchez', serif;
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 105%;
+}
+
 h1,
 h2,
 h3,

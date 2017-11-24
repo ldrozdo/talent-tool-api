@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem, Glyphicon, Button } from 'react-bootstrap';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +14,22 @@ import Queries from '../queries/Queries';
 
 class Navigation extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    console.log("logout");
+    this.props.keycloak.logout();
+  }
+
+
   render() {
+    let username = localStorage.getItem('username');
+    let keycloak = this.props.keycloak;
+    console.log(keycloak);
     return (
         <Router>
           <div>
@@ -30,6 +45,7 @@ class Navigation extends Component {
                   <NavItem className="navigation-menu"><NavLink to="queries">Manage your queries</NavLink></NavItem>
                   <NavItem className="navigation-menu"><NavLink to="categories">Categories</NavLink></NavItem>
                   <NavItem className="navigation-menu"><NavLink to="languages">Languages</NavLink></NavItem>
+                  <NavItem className="menu-user" onClick = {this.onClick}><Glyphicon glyph="user"/>{username} LOGOUT</NavItem>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>

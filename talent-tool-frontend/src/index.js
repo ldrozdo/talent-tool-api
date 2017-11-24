@@ -19,6 +19,9 @@ var keycloak = Keycloak();
 keycloak.init({ onLoad: 'login-required' }).success(keycloakInfo => {
   localStorage.setItem('token', keycloak.token);
   localStorage.setItem('roles', keycloak.tokenParsed.realm_access.roles);
+  localStorage.setItem('username', keycloak.idTokenParsed.preferred_username);
+  localStorage.setItem('keycloak', keycloak);
+  console.log(keycloak);
 
   store.dispatch(loadLanguages());
   store.dispatch(loadCategories());
@@ -32,7 +35,7 @@ keycloak.init({ onLoad: 'login-required' }).success(keycloakInfo => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App keycloak={keycloak}/>
   </Provider>,
    document.getElementById('root'));
 registerServiceWorker();

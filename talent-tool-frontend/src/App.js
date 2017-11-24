@@ -8,7 +8,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <Navigation />
+        <Navigation keycloak={this.props.keycloak}/>
       </div>
     );
   }
