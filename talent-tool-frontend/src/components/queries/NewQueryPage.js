@@ -99,7 +99,7 @@ NewQueryPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let query = {name: '', text_of_query: ''};
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   return {query: query, authToken: authToken};
 }
 

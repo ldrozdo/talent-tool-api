@@ -62,7 +62,7 @@ NewCategoryPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let category = {name: '', category_query: ''};
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   return {category: category, authToken: authToken};
 }
 

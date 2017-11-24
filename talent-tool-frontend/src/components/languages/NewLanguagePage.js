@@ -62,7 +62,7 @@ NewLanguagePage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let language = {name: ''};
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   return {language: language, authToken: authToken };
 }
 

@@ -6,6 +6,7 @@ import { Nav, NavItem, Grid, Row, Col} from 'react-bootstrap';
 import CategoryList from './CategoryList';
 import CategoryPage from './CategoryPage';
 import NewCategoryPage from './NewCategoryPage';
+import Search from '../common/Search';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import { Button, Alert} from 'react-bootstrap';
@@ -22,7 +23,8 @@ class Categories extends React.Component {
       categories: this.props.categories,
       isCreating: false,
       errorMessage: null,
-      isAdmin: this.props.isAdmin
+      isAdmin: this.props.isAdmin,
+      searchText: ''
     };
 
     this.onCategoryClicked = this.onCategoryClicked.bind(this);
@@ -30,6 +32,7 @@ class Categories extends React.Component {
     this.onCategoryDeleted = this.onCategoryDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
     this.handleCreating = this.handleCreating.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   onCategoryClicked(catIndex) {
@@ -65,6 +68,10 @@ class Categories extends React.Component {
     this.setState({selectedCategory: null});
   }
 
+  handleSearch(searchText) {
+      this.setState({searchText: searchText});
+  }
+
 
   render() {
     const { selectedCategory } = this.state;
@@ -78,7 +85,8 @@ class Categories extends React.Component {
             <Button bsSize="xsmall" onClick={this.toggleCreating}> + Category</Button>
           }
           </h2>
-          <CategoryList categories={this.props.categories} onCategoryClicked={this.onCategoryClicked}  />
+          <Search handleSearch={this.handleSearch} searchText={this.props.searchText} />
+          <CategoryList categories={this.props.categories} onCategoryClicked={this.onCategoryClicked} searchText={this.state.searchText} />
           </Col>
           <Col xs={8} md={8}>
           {this.state.errorMessage &&

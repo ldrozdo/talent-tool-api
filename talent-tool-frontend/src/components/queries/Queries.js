@@ -9,6 +9,7 @@ import NewQueryPage from './NewQueryPage';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import { Button, Alert} from 'react-bootstrap';
+import Search from '../common/Search';
 
 class Queries extends React.Component {
 
@@ -23,7 +24,8 @@ class Queries extends React.Component {
       categories: this.props.categories,
       isCreating: false,
       errorMessage: null,
-      authToken: this.props.authToken
+      authToken: this.props.authToken,
+      searchText: ''
     };
 
     this.onQueryClicked = this.onQueryClicked.bind(this);
@@ -31,21 +33,8 @@ class Queries extends React.Component {
     this.onQueryDeleted = this.onQueryDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
     this.handleCreating = this.handleCreating.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
-
-  // componentWillMount() {
-  //   this.props.actions.loadQueries(this.state.authToken)
-  //     .then(({ queries }) => {
-  //       this.setState({ queries : queries });
-  //     });
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   this.props.actions.loadQueries(this.state.authToken)
-  //     .then(({ queries }) => {
-  //       this.setState({ queries : queries });
-  //     });
-  // }
 
   onQueryClicked(queryIndex) {
     this.setState({isCreating: false});
@@ -80,6 +69,11 @@ class Queries extends React.Component {
     }
   }
 
+  handleSearch(searchText) {
+      this.setState({searchText: searchText});
+   }
+
+
   render() {
     const { selectedQuery } = this.state;
 
@@ -90,7 +84,8 @@ class Queries extends React.Component {
           <h2>Your queries &nbsp;
           <Button bsSize="xsmall" onClick={this.toggleCreating}> + Query</Button>
           </h2>
-          <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked}  />
+          <Search handleSearch={this.handleSearch} searchText={this.props.searchText} />
+          <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked} searchText={this.state.searchText} />
           </Col>
           <Col xs={8} md={8}>
             {this.state.errorMessage &&

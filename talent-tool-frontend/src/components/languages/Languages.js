@@ -6,6 +6,7 @@ import { Nav, NavItem, Grid, Row, Col} from 'react-bootstrap';
 import LanguageList from './LanguageList';
 import LanguagePage from './LanguagePage';
 import NewLanguagePage from './NewLanguagePage';
+import Search from '../common/Search';
 import { withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import { Button, Alert} from 'react-bootstrap';
@@ -22,7 +23,8 @@ class Languages extends React.Component {
       languages: this.props.languages,
       isCreating: false,
       errorMessage: null,
-      isAdmin: this.props.isAdmin
+      isAdmin: this.props.isAdmin,
+      searchText: ''
     };
 
     this.onLanguageClicked = this.onLanguageClicked.bind(this);
@@ -30,6 +32,7 @@ class Languages extends React.Component {
     this.onLanguageDeleted = this.onLanguageDeleted.bind(this);
     this.toggleCreating = this.toggleCreating.bind(this);
     this.handleCreating = this.handleCreating.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   onLanguageClicked(langIndex) {
@@ -65,6 +68,10 @@ class Languages extends React.Component {
     }
   }
 
+  handleSearch(searchText) {
+      this.setState({searchText: searchText});
+  }
+
   render() {
     const { selectedLanguage } = this.state;
 
@@ -77,7 +84,8 @@ class Languages extends React.Component {
             <Button bsSize="xsmall" onClick={this.toggleCreating}> + Language</Button>
           }
           </h2>
-          <LanguageList languages={this.props.languages} onLanguageClicked={this.onLanguageClicked}  />
+          <Search handleSearch={this.handleSearch} searchText={this.props.searchText} />
+          <LanguageList languages={this.props.languages} onLanguageClicked={this.onLanguageClicked} searchText={this.state.searchText}  />
           </Col>
           <Col xs={8} md={8}>
               {this.state.errorMessage &&
