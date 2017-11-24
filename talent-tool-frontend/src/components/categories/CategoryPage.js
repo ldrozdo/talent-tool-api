@@ -141,11 +141,13 @@ function isInTranslations(languageId, translations){
 
 function mapStateToProps(state, ownProps) {
   let category = {name: '', category_query: ''};
-  let authToken = state.authentication.token;
+  // let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   let translations = [];
   let languages = state.languages;
   let languagesForTranslations = [];
-  let rolesOfUser = state.authentication.tokenParsed.realm_access.roles;
+  // let rolesOfUser = state.authentication.tokenParsed.realm_access.roles;
+  let rolesOfUser = localStorage.getItem('roles');
   let isAdmin = (rolesOfUser.indexOf("app_admin") > -1);
   if (ownProps.category) {
     const id = ownProps.category.id;

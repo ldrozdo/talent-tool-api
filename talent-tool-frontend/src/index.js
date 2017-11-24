@@ -11,14 +11,22 @@ import {loadTranslations} from './actions/translationActions';
 import {loadQueries} from './actions/queryActions';
 import {loadTerms} from './actions/termActions';
 import {handleAuthentication} from './actions/authenticationAction';
+import Keycloak from 'keycloak-js';
 
 const store = configureStore();
-store.dispatch(handleAuthentication());
-store.dispatch(loadLanguages());
-store.dispatch(loadCategories());
-store.dispatch(loadTranslations());
-store.dispatch(loadQueries());
-store.dispatch(loadTerms());
+
+var keycloak = Keycloak();
+keycloak.init({ onLoad: 'login-required' }).success(keycloakInfo => {
+  localStorage.setItem('token', keycloak.token);
+  localStorage.setItem('roles', keycloak.tokenParsed.realm_access.roles);
+
+  store.dispatch(loadLanguages());
+  store.dispatch(loadCategories());
+  store.dispatch(loadTranslations());
+  store.dispatch(loadQueries(localStorage.getItem('token')));
+  store.dispatch(loadTerms());
+});
+
 
 
 

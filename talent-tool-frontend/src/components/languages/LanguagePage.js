@@ -104,8 +104,8 @@ LanguagePage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let language = {name: ''};
-  let authToken = state.authentication.token;
-  let rolesOfUser = state.authentication.tokenParsed.realm_access.roles;
+  let authToken = localStorage.getItem('token');
+  let rolesOfUser = localStorage.getItem('roles');
   let isAdmin = (rolesOfUser.indexOf("app_admin") > -1);
   if (ownProps.language) {
     const id = ownProps.language.id;

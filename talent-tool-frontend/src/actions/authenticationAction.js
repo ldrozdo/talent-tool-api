@@ -4,13 +4,12 @@ import Keycloak from 'keycloak-js';
 export function handleAuthentication() {
   return function(dispatch) {
     var keycloak = Keycloak();
-    // keycloak.init().success(function(authenticated) {
-    //         alert(authenticated ? 'authenticated' : 'not authenticated');
-    //     }).error(function() {
-    //         alert('failed to initialize');
-    //     });
     keycloak.init({ onLoad: 'login-required' }).success(keycloakInfo => {
       dispatch(handleAuthenticationSuccess(keycloak));
+      console.log("authentication");
+      console.log(keycloak.tokenParsed.realm_access.roles);
+      localStorage.setItem('token', keycloak.token);
+      localStorage.setItem('roles', keycloak.tokenParsed.realm_access.roles);
     });
     return keycloak;
   };

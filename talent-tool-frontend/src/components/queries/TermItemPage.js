@@ -42,7 +42,7 @@ TermItemPage.propTypes = {
 function mapStateToProps(state, ownProps) {
   let term = ownProps.term;
   let category = ownProps.category;
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   return {term: term, category: category, authToken: authToken };
 }
 

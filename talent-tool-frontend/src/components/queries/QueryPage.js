@@ -225,7 +225,7 @@ function collectQueryTerms(query, terms) {
 function mapStateToProps(state, ownProps) {
   let query = {name: ''};
   let allTerms = state.terms;
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   let termsOfQuery = [];
   if (ownProps.query) {
     const id = ownProps.query.id;
@@ -234,10 +234,6 @@ function mapStateToProps(state, ownProps) {
       termsOfQuery = collectQueryTerms(query,state.terms);
     }
   }
-  // if (ownProps.query) {
-  //   query = ownProps.query;
-  // }
-  // let termsOfQuery = collectQueryTerms(query,state.terms)
   return {query: query, terms: termsOfQuery, categories: state.categories, authToken: authToken};
 }
 

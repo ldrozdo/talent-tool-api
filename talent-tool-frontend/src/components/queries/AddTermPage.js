@@ -70,7 +70,7 @@ AddTermPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let term = {operator: '', category_id: '', query_id: ''};
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   return {term: term, authToken: authToken};
 }
 
