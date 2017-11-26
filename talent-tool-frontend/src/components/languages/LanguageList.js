@@ -17,7 +17,7 @@ class LanguageList extends React.Component {
   render() {
     var searchText = this.props.searchText;
     var languages = this.props.languages.map((language, index) => {
-      if(language.name != '' && language.name.toUpperCase().indexOf(searchText.toUpperCase()) !== -1)
+      if(language.name && language.name != '' && language.name.toUpperCase().indexOf(searchText.toUpperCase()) !== -1)
         return <LanguageItem
           key={language.id}
           language={language}
