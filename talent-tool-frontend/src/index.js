@@ -28,14 +28,11 @@ keycloak.init({ onLoad: 'login-required' }).success(keycloakInfo => {
   store.dispatch(loadTranslations());
   store.dispatch(loadQueries(localStorage.getItem('token')));
   store.dispatch(loadTerms());
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <App keycloak={keycloak}/>
+    </Provider>,
+     document.getElementById('root'));
+  registerServiceWorker();
 });
-
-
-
-
-ReactDOM.render(
-  <Provider store={store}>
-    <App keycloak={keycloak}/>
-  </Provider>,
-   document.getElementById('root'));
-registerServiceWorker();

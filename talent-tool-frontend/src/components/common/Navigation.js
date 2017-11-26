@@ -22,12 +22,14 @@ class Navigation extends Component {
 
   onClick() {
     console.log("logout");
+    localStorage.setItem('username', '');
     this.props.keycloak.logout();
   }
 
 
   render() {
     let username = localStorage.getItem('username');
+    // let username = this.props.keycloak.idTokenParsed.preferred_username;
     let keycloak = this.props.keycloak;
     console.log(keycloak);
     return (
