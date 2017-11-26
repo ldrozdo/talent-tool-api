@@ -64,7 +64,7 @@ EditTranslationPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let translation = ownProps.translation;
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   return {translation: translation, authToken: authToken};
 }
 

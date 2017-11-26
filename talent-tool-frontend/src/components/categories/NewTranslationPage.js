@@ -64,7 +64,7 @@ NewTranslationPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  let authToken = state.authentication.token;
+  let authToken = localStorage.getItem('token');
   let translation = {translated_query: ''};
   return {translation: translation, authToken: authToken};
 }

@@ -1,7 +1,9 @@
+import * as host from './ApiHost'
+
 class TermApi {
 
   static getAllTerms() {
-    return fetch('http://localhost:4000/terms').then(response => {
+    return fetch(`${host.API_HOST}/terms`).then(response => {
       return response.json();
     }).catch(error => {
       return error;
@@ -12,7 +14,7 @@ class TermApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-     const request = new Request(`http://localhost:4000/queries/${term.query_id}/categories/${term.category_id}/terms`, {
+     const request = new Request(`${host.API_HOST}/queries/${term.query_id}/categories/${term.category_id}/terms`, {
        method: 'POST',
        headers: headers,
        body: JSON.stringify(term)
@@ -29,7 +31,7 @@ class TermApi {
      let headers = new Headers();
      headers.append('Content-Type', 'application/json');
      headers.append('Authorization', 'Bearer ' + authToken);
-     const request = new Request(`http://localhost:4000/terms/${term.id}`, {
+     const request = new Request(`${host.API_HOST}/terms/${term.id}`, {
        method: 'DELETE',
        headers: headers
      });

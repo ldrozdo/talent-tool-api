@@ -1,3 +1,5 @@
+import * as host from './ApiHost'
+
 class QueryApi {
 
   static getAllQueries(authToken) {
@@ -5,7 +7,7 @@ class QueryApi {
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
     console.log("som v api")
-    const request = new Request('http://localhost:4000/queries', {
+    const request = new Request(`${host.API_HOST}/queries`, {
       method: 'GET',
       headers: headers
     });
@@ -20,7 +22,7 @@ class QueryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-   const request = new Request(`http://localhost:4000/queries/${query.id}`, {
+   const request = new Request(`${host.API_HOST}/queries/${query.id}`, {
      method: 'PUT',
      headers: headers,
      body: JSON.stringify(query)
@@ -37,7 +39,7 @@ class QueryApi {
    let headers = new Headers();
    headers.append('Content-Type', 'application/json');
    headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request('http://localhost:4000/queries', {
+    const request = new Request(`${host.API_HOST}/queries`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(query)
@@ -54,7 +56,7 @@ class QueryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request(`http://localhost:4000/queries/${query.id}`, {
+    const request = new Request(`${host.API_HOST}/queries/${query.id}`, {
       method: 'DELETE',
       headers: headers,
     });
@@ -70,7 +72,7 @@ class QueryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request(`http://localhost:4000/basic_form_query/${query.id}`, {
+    const request = new Request(`${host.API_HOST}/basic_form_query/${query.id}`, {
       method: 'GET',
       headers: headers
     });
@@ -86,7 +88,7 @@ class QueryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request(`http://localhost:4000/expanded_query_linkedin/${query.id}`, {
+    const request = new Request(`${host.API_HOST}/expanded_query_linkedin/${query.id}`, {
       method: 'GET',
       headers: headers
     });

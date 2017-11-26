@@ -1,7 +1,9 @@
+import * as host from './ApiHost';
+
 class CategoryApi {
 
   static getAllCategories() {
-    return fetch('http://localhost:4000/categories').then(response => {
+    return fetch(`${host.API_HOST}/categories`).then(response => {
       return response.json();
     }).catch(error => {
       return error;
@@ -12,7 +14,7 @@ class CategoryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-   const request = new Request(`http://localhost:4000/categories/${category.id}`, {
+   const request = new Request(`${host.API_HOST}/categories/${category.id}`, {
      method: 'PUT',
      headers: headers,
      body: JSON.stringify(category)
@@ -29,7 +31,7 @@ class CategoryApi {
      let headers = new Headers();
      headers.append('Content-Type', 'application/json');
      headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request('http://localhost:4000/categories', {
+    const request = new Request(`${host.API_HOST}/categories`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(category)
@@ -46,7 +48,7 @@ class CategoryApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request(`http://localhost:4000/categories/${category.id}`, {
+    const request = new Request(`${host.API_HOST}/categories/${category.id}`, {
       method: 'DELETE',
       headers: headers
     });

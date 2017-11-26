@@ -202,6 +202,11 @@ class QueryPage extends React.Component {
           {this.state.linkedin_query}
         </Panel>
         <Button target="_blank" href={this.urlForLinkedIn()}>Search in LinkedIn</Button>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     )
   }

@@ -6,13 +6,11 @@ class Footer extends React.Component {
     return (
       <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-          <p class="navbar-text pull-left">© {year} - Created as a diploma thesis by: Lucia Bahútová,
+          <p class="navbar-text pull-left">© {year} - Created by: Lucia Bahútová,
           Faculty of Informatics, Masaryk University
           </p>
-    </div>
-
-
-  </div>
+        </div>
+      </div>
   );
   }
 }

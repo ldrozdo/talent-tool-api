@@ -1,6 +1,8 @@
+import * as host from './ApiHost'
+
 class TranslationApi {
   static getAllTranslations() {
-    return fetch(`http://localhost:4000/translations`).then(response => {
+    return fetch(`${host.API_HOST}/translations`).then(response => {
       return response.json()
     }).catch(error => {
       return error
@@ -11,7 +13,7 @@ class TranslationApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-   const request = new Request(`http://localhost:4000/translations/${translation.id}`, {
+   const request = new Request(`${host.API_HOST}/translations/${translation.id}`, {
      method: 'PUT',
      headers: headers,
      body: JSON.stringify(translation)
@@ -28,7 +30,7 @@ class TranslationApi {
      let headers = new Headers();
      headers.append('Content-Type', 'application/json');
      headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request(`http://localhost:4000/categories/${translation.category_id}/languages/${translation.language_id}/translations`, {
+    const request = new Request(`${host.API_HOST}/categories/${translation.category_id}/languages/${translation.language_id}/translations`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(translation)
@@ -44,7 +46,7 @@ class TranslationApi {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + authToken);
-    const request = new Request(`http://localhost:4000/translations/${translation.id}`, {
+    const request = new Request(`${host.API_HOST}/translations/${translation.id}`, {
       method: 'DELETE',
       headers: headers
     });
