@@ -53,8 +53,10 @@ class NewQueryPage extends React.Component {
   saveComplexQuery(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.createQuery(this.state.query, this.state.authToken);
-    this.props.turnOffCreating();
+    this.props.actions.createQuery(this.state.query, this.state.authToken)
+    .then(({ message }) => {
+      this.props.handleCreating(message)
+    });
   }
 
   resetQueryState() {

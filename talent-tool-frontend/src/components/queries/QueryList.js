@@ -18,7 +18,7 @@ class QueryList extends React.Component {
   render() {
     var searchText = this.props.searchText;
     var queries = this.props.queries.map((query, index) => {
-      if(query.name != '' && query.name.toUpperCase().indexOf(searchText.toUpperCase()) !== -1)
+      if(query.name && query.name != '' && query.name.toUpperCase().indexOf(searchText.toUpperCase()) !== -1)
         return   <QueryItem
             key={query.id}
             query={query}

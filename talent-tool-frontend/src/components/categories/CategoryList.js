@@ -18,7 +18,7 @@ class CategoryList extends React.Component {
   render() {
     var searchText = this.props.searchText;
     var categories = this.props.categories.map((category, index) => {
-      if(category.name != '' && category.name.toUpperCase().indexOf(searchText.toUpperCase()) !== -1)
+      if(category.name && category.name != '' && category.name.toUpperCase().indexOf(searchText.toUpperCase()) !== -1)
         return <CategoryItem
           key={category.id}
           category={category}
