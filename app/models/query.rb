@@ -74,7 +74,11 @@ class Query < ApplicationRecord
     end
 
     if !or_terms.empty?
-      simple_query += "AND ( "
+      if and_terms.empty?
+        simple_query += "( "
+      else
+        simple_query += "AND ( "
+      end
     end
     last = or_terms.size - 1
     counter = 0
@@ -88,7 +92,11 @@ class Query < ApplicationRecord
     end
 
     if !not_terms.empty?
-      simple_query += "AND NOT ( "
+      if and_terms.empty? && or_terms.empty?
+        simple_query += " NOT ( "
+      else
+        simple_query += "AND NOT ( "
+      end
     end
     last = not_terms.size - 1
     counter = 0
@@ -135,8 +143,8 @@ class Query < ApplicationRecord
         counter_translations = 0
         last_translation = and_term.all_translated_texts.size - 1
         and_term.all_translated_texts.each do |translated_text|
-          if (counter == last)
-            simple_query += "OR (" + translated_text + "))) "
+          if (counter == last && counter_translations == last_translation)
+            simple_query += " OR (" + translated_text + "))) "
           elsif (counter_translations == last_translation)
             simple_query += " OR (" + translated_text + ")) " + and_term.operator + " "
           else
@@ -157,7 +165,11 @@ class Query < ApplicationRecord
     end
 
     if !or_terms.empty?
-      simple_query += "AND ( "
+      if and_terms.empty?
+        simple_query += "( "
+      else
+        simple_query += "AND ( "
+      end
     end
     last = or_terms.size - 1
     counter = 0
@@ -172,7 +184,7 @@ class Query < ApplicationRecord
         counter_translations = 0
         last_translation = or_term.all_translated_texts.size - 1
         or_term.all_translated_texts.each do |translated_text|
-          if (counter == last)
+          if (counter == last && counter_translations == last_translation)
             simple_query += "OR (" + translated_text + "))) "
           elsif (counter_translations == last_translation)
             simple_query += " OR (" + translated_text + ")) " + or_term.operator + " "
@@ -194,7 +206,11 @@ class Query < ApplicationRecord
     end
 
     if !not_terms.empty?
-      simple_query += "AND NOT ( "
+      if and_terms.empty? && or_terms.empty?
+        simple_query += " NOT ( "
+      else
+        simple_query += "AND NOT ( "
+      end
     end
     last = not_terms.size - 1
     counter = 0
@@ -209,7 +225,7 @@ class Query < ApplicationRecord
         counter_translations = 0
         last_translation = not_term.all_translated_texts.size - 1
         not_term.all_translated_texts.each do |translated_text|
-          if (counter == last)
+          if (counter == last && counter_translations == last_translation)
             simple_query += "OR (" + translated_text + "))) "
           elsif (counter_translations == last_translation)
             simple_query += " OR (" + translated_text + ")) " + "OR "

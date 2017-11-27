@@ -28,27 +28,19 @@ class TermsList extends React.Component {
 
 
   render() {
-    return (
-      <div>
-      <br />
-        <ul className="list-unstyled">
-          {this.props.terms.map(term =>
-            <TermItemPage term = {term} category={this.findCategoryForTerm(term)} />
-            )}
-        </ul>
-      </div>
-    );
+    var terms = this.props.terms.map(term => {
+      if(this.findCategoryForTerm(term))
+        return <TermItemPage term = {term} category={this.findCategoryForTerm(term)} />;
+      });
+        return <div>
+                <br />
+                  <ul className="list-unstyled">{terms}</ul>
+               </div>;
   }
 }
 
 TermsList.propTypes = {
   terms: PropTypes.array.isRequired
 };
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators(termActions, dispatch)
-//   };
-// }
 
 export default TermsList;

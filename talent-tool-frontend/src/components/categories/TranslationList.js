@@ -13,7 +13,6 @@ class TranslationList extends React.Component {
     super(props);
 
     this.findLanguageForTranslation = this.findLanguageForTranslation.bind(this);
-    // this.deleteTranslation = this.deleteTranslation.bind(this);
   }
 
 
@@ -27,26 +26,20 @@ class TranslationList extends React.Component {
     return language
   };
 
-  // deleteTranslation(event,translation) {
-  //   this.props.actions.deleteTranslation(translation, this.props.authToken);
-  // }
-
   render() {
-    return (
-      <div>
-        <h3>Translations</h3>
-        <ul>
-          {this.props.translations.map(translation =>
-              <li key={translation.id}><b>{this.findLanguageForTranslation(translation).name}: </b>
-              {translation.translated_query}
-              {this.props.isAdmin &&
-                <EditTranslationPage translation = {translation}/>
-              }
-              </li>
-            )}
-        </ul>
-      </div>
-    );
+    var translations = this.props.translations.map(translation => {
+      if(this.findLanguageForTranslation(translation))
+        return <li key={translation.id}><b>{this.findLanguageForTranslation(translation).name}: </b>
+        {translation.translated_query}
+        {this.props.isAdmin &&
+          <EditTranslationPage translation = {translation}/>
+        }
+        </li>;
+      });
+        return <div>
+                  <h3>Translations</h3>
+                  <ul>{translations}</ul>
+               </div>;
   }
 }
 
