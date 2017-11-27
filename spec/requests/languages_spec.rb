@@ -92,11 +92,11 @@ RSpec.describe 'Languages API', type: :request do
       before { put "/languages/#{language_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
-        expect(response.body).to be_empty
+        expect(response.body).not_to be_empty
       end
 
-      it 'returns status code 204' do
-        expect(response).to have_http_status(204)
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
       end
     end
   end

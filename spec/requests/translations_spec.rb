@@ -12,7 +12,7 @@ RSpec.describe 'Translations API' do
   let(:headers) { valid_headers }
 
   describe 'GET /categories/:category_id/translations' do
-    before { get "/categories/#{category_id}/translations" , params: {}, headers: headers}
+    before { get "/translations" , params: {}, headers: headers}
 
     context 'when translation exists' do
       it 'returns status code 200' do

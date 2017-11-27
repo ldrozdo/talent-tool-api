@@ -14,7 +14,7 @@ RSpec.describe 'Terms API' do
   let(:headers) { valid_headers }
 
   describe 'GET /queries/:query_id/terms' do
-    before { get "/queries/#{query_id}/terms" , params: {}, headers: headers}
+    before { get "/terms" , params: {}, headers: headers}
 
     context 'when term exists' do
       it 'returns status code 200' do
@@ -56,7 +56,7 @@ RSpec.describe 'Terms API' do
   # Test suite for PUT /todos/:todo_id/items
   describe 'POST /queries/:query_id/categories/:category_id/terms' do
     let(:valid_attributes) do
-      { operator: 'AND',query_id: 1, category_id: 1 }.to_json 
+      { operator: 'AND',query_id: 1, category_id: 1 }.to_json
     end
 
     context 'when request attributes are valid' do
