@@ -86,7 +86,9 @@ class Queries extends React.Component {
           </h2>
           <Search handleSearch={this.handleSearch} searchText={this.props.searchText} />
           <QueryList queries={this.props.queries} onQueryClicked={this.onQueryClicked} searchText={this.state.searchText} />
+          <br /><br /><br />
           </Col>
+
           <Col xs={8} md={8}>
             {this.state.errorMessage &&
               <Alert bsStyle="warning">

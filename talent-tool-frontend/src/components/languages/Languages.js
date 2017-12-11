@@ -86,7 +86,9 @@ class Languages extends React.Component {
           </h2>
           <Search handleSearch={this.handleSearch} searchText={this.props.searchText} />
           <LanguageList languages={this.props.languages} onLanguageClicked={this.onLanguageClicked} searchText={this.state.searchText}  />
+          <br /><br /><br />
           </Col>
+
           <Col xs={8} md={8}>
               {this.state.errorMessage &&
                 <Alert bsStyle="warning">

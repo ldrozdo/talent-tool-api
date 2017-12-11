@@ -80,13 +80,14 @@ class Categories extends React.Component {
       <Grid>
         <Row className="show-grid">
           <Col xs={3} md={3}>
-          <h2>Categories &nbsp;
+          <h2>Modules &nbsp;
           { this.state.isAdmin &&
             <Button bsSize="xsmall" onClick={this.toggleCreating}> + Category</Button>
           }
           </h2>
           <Search handleSearch={this.handleSearch} searchText={this.props.searchText} />
           <CategoryList categories={this.props.categories} onCategoryClicked={this.onCategoryClicked} searchText={this.state.searchText} />
+          <br /><br /><br />
           </Col>
           <Col xs={8} md={8}>
           {this.state.errorMessage &&

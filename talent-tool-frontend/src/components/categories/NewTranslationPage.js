@@ -29,6 +29,9 @@ class NewTranslationPage extends React.Component {
     const field = event.target.name;
     const translation = this.state.translation;
     translation[field] = event.target.value;
+    translation['category_id'] = this.props.category.id;
+    console.log(this.props.category.id);
+    console.log(translation);
     return this.setState({translation: translation});
   }
 

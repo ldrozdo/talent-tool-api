@@ -97,7 +97,7 @@ class CategoryPage extends React.Component {
           </div> }
         <TranslationList translations={this.props.translations} languages={this.props.languages} authToken={this.state.authToken} isAdmin={this.state.isAdmin}/>
         {this.state.isAdmin &&
-          <CreateTranslationsList languages={this.props.languagesForTranslations}  category = {this.state.category}
+          <CreateTranslationsList languages={this.props.languagesForTranslations}  category = {this.props.category}
           authToken={this.state.authToken}/>}
           <br/>
           <br/>

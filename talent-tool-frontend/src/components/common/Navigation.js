@@ -44,8 +44,8 @@ class Navigation extends Component {
               </Navbar.Header>
               <Navbar.Collapse>
                 <Nav pullRight>
-                  <NavItem className="navigation-menu"><NavLink to="queries">Manage your queries</NavLink></NavItem>
-                  <NavItem className="navigation-menu"><NavLink to="categories">Categories</NavLink></NavItem>
+                  <NavItem className="navigation-menu"><NavLink to="queries">Build your search queries</NavLink></NavItem>
+                  <NavItem className="navigation-menu"><NavLink to="categories">Modules</NavLink></NavItem>
                   <NavItem className="navigation-menu"><NavLink to="languages">Languages</NavLink></NavItem>
                   <NavItem className="menu-user" onClick = {this.onClick}><Glyphicon glyph="user"/>{username} LOGOUT</NavItem>
                 </Nav>
