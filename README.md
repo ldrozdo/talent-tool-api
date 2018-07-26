@@ -2,7 +2,7 @@
 The application Talent Acquisition Tool is developed for the effective creating and managing boolean queries for LinkedIn and other social networks. It was created as a diploma thesis especially for Talent Acquisition Team in Red Hat Brno.
 
 ## How to run the app
-For this app, you need to have **Keycloak** for authentication. 
+For this app, you need to have **Keycloak** for authentication. You can download it from here: https://www.keycloak.org/downloads.html
 
 1.**Download or clone the code from github**
   - git clone https://github.com/blahutova/talent-tool-api
