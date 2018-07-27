@@ -34,6 +34,7 @@ For this app, you need to have **Keycloak** for authentication. You can download
 5.**Run the apps**
   - backend in first terminal: go to the talent-tool-api folder and run:
     -  bundle install --without production
+    -  rails db:migrate
     -  rails server -p $number_of_backend_port
   - frontend in second terminal: go to the talent-tool-api/talent-tool-frontend and run:
     - npm install
