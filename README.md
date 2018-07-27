@@ -30,5 +30,12 @@ For this app, you need to have **Keycloak** for authentication. You can download
 4.**Set up the frontend**
   - Open **talent-tool-frontend/src/api/ApiHost.js**
   - Rewrite the **API_HOST** constant to the future url of your backend
+  
+5.**Run the apps**
+backend in first terminal:
+  -  bundle install --without production
+  -  rails server
+frontend in second terminal:
+  -
 
 
