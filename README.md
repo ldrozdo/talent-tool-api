@@ -32,10 +32,10 @@ For this app, you need to have **Keycloak** for authentication. You can download
   - Rewrite the **API_HOST** constant to the future url of your backend
   
 5.**Run the apps**
-  - backend in first terminal:
+  - backend in first terminal: go to the talent-tool-api folder and run:
     -  bundle install --without production
     -  rails server
-  - frontend in second terminal:
-    -
+  - frontend in second terminal: go to the talent-tool-api/talent-tool-frontend and run:
+    - npm start
 
 
