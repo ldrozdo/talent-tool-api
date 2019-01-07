@@ -31,6 +31,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.5'
+  gem 'foreman', '~> 0.85.0'
 end
 
 group :test do
