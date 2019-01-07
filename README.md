@@ -32,12 +32,9 @@ For this app, you need to have **Keycloak** for authentication. You can download
   - Rewrite the **API_HOST** constant to the future url of your backend
   
 5.**Run the apps**
-  - backend in first terminal: go to the talent-tool-api folder and run:
+  - you have to run bundle install and migration only for very first run of the app, after that you can use only rake start
     -  bundle install --without production
     -  rails db:migrate
-    -  rails server -p $number_of_backend_port
-  - frontend in second terminal: go to the talent-tool-api/talent-tool-frontend and run:
-    - npm install
-    - npm start
+    -  rake start
 
 
