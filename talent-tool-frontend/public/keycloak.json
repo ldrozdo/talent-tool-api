@@ -1,7 +1,9 @@
 {
-  "realm": "demo",
+  "realm": "talent-tool",
   "auth-server-url": "http://localhost:8080/auth",
   "ssl-required": "external",
-  "resource": "talent-tool-frontend",
-  "public-client": true
+  "resource": "talent-tool",
+  "public-client": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
 }
